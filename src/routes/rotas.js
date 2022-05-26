@@ -14,7 +14,7 @@ export default function Rotas(){
   <Switch>
   <Route exact path='/login' component={Login} />
       <Main>
-    <RotasPrivadas exact path='/' component={Inicio} />
+    <RotasPrivadas exact path='/home' component={Inicio} />
     <RotasPrivadas exact path='/tabela' component={Tabela} />
     <Route component={NaoEncontrado} />
     </Main>

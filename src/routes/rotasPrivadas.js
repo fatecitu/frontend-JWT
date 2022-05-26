@@ -1,12 +1,12 @@
 import React from 'react'
 import {Route, Redirect} from 'react-router-dom'
 
-const rotasPrivadas = ({ component: Component, ...rest }) => (
+const RotasPrivadas = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
-        localStorage.getItem("logado") === btoa(process.env.REACT_APP_USER)
+        localStorage.getItem('token') // Implementar validação JWT
         ? <Component {...props} />
         : <Redirect to='/login' />
-    )} />
+      )} />
   )
 
-  export default rotasPrivadas
+  export default RotasPrivadas

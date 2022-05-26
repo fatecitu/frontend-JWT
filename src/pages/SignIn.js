@@ -24,7 +24,7 @@ import {
 } from "antd"
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import signinbg from "../assets/images/img-signin.png"
-import Api from "../resources/api/API"
+import { signIn } from "../resources/api/API"
 
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
@@ -37,7 +37,7 @@ export default function SignIn() {
   const [lembrarUsuario, setLembrarUsuario] = useState(false)
   const [botaoDesabilitado, setBotaoDesabilitado] = useState(true)
   const [carregando, setCarregando] = useState(false)
-  
+
 
 
   useEffect(() => {
@@ -60,135 +60,135 @@ export default function SignIn() {
     setLembrarUsuario(!lembrarUsuario);
   }
 
-  const validaLogin = async() => {
-    
+  const validaLogin = async () => {
+
     if (email && senha) {
       setCarregando(true)
-      let res = await Api.signIn(email, senha)
-            if (res.access_token) {
-      localStorage.setItem("token", res.access_token)
-      history.push("/")
-    } else {
-      message.error(`‼️Erro: ${res.errors[0].msg}`);
+      let res = await signIn(email, senha)
+      if (res.access_token) {
+        localStorage.setItem("token", res.access_token)
+        history.push("/home")
+      } else {
+        message.error(`‼️Erro: ${res.errors[0].msg}`);
+      }
+      setCarregando(false)
     }
-    setCarregando(false)
   }
-} 
-    const onFinish = (values) => {
-      console.log("Success:", values);
-      validaLogin()
-    };
+  const onFinish = (values) => {
+    //console.log("Success:", values);
+    validaLogin()
+  };
 
-    const onFinishFailed = (errorInfo) => {
-      console.log("Failed:", errorInfo);
-    };
-    return (
-      <>
-        <Layout className="layout-default layout-signin">
-          <Header>
-            <div className="header-col header-brand">
-              <h5>Área Reservada</h5>
-            </div>
-          </Header>
-          <Content className="signin">
-            <Row gutter={[24, 0]} justify="space-around">
-              <Col
-                xs={{ span: 24, offset: 0 }}
-                lg={{ span: 6, offset: 2 }}
-                md={{ span: 12 }}
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+  return (
+    <>
+      <Layout className="layout-default layout-signin">
+        <Header>
+          <div className="header-col header-brand">
+            <h5>Área Reservada</h5>
+          </div>
+        </Header>
+        <Content className="signin">
+          <Row gutter={[24, 0]} justify="space-around">
+            <Col
+              xs={{ span: 24, offset: 0 }}
+              lg={{ span: 6, offset: 2 }}
+              md={{ span: 12 }}
+            >
+              <Title className="mb-8">Klienta</Title>
+              <Title className="font-regular text-muted" level={5}>
+                Informe os dados para o acesso
+              </Title>
+              <Form
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                layout="vertical"
+                className="row-col"
               >
-                <Title className="mb-8">Klienta</Title>
-                <Title className="font-regular text-muted" level={5}>
-                  Informe os dados para o acesso
-                </Title>
-                <Form
-                  onFinish={onFinish}
-                  onFinishFailed={onFinishFailed}
-                  layout="vertical"
-                  className="row-col"
+                <Form.Item
+                  className="username"
+                  label="Email"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      type: 'email',
+                      message: "Por favor, informe um email válido!",
+                    },
+                  ]}
                 >
-                  <Form.Item
-                    className="username"
-                    label="Email"
-                    name="email"
-                    rules={[
-                      {
-                        required: true,
-                        type: 'email',
-                        message: "Por favor, informe um email válido!",
-                      },
-                    ]}
+                  <Input placeholder="Email"
+                    onChange={e => setEmail(e.target.value)} />
+                </Form.Item>
+
+
+                <Form.Item
+                  className="username"
+                  label="Senha"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Por favor, informe a sua senha!",
+                    },
+                  ]}
+                >
+                  <Input.Password
+                    placeholder="Senha"
+                    onChange={e => setSenha(e.target.value)}
+                    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name="lembrar"
+                  className="aligin-center"
+                  valuePropName="checked"
+                >
+                  <Switch defaultChecked onChange={alteraLembrar} />
+                  Lembrar o usuário
+                </Form.Item>
+
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    disabled={botaoDesabilitado}
+                    style={{ width: "100%" }}
+                    loading={carregando}
                   >
-                    <Input placeholder="Email"
-                     onChange={e => setEmail(e.target.value)} />
-                  </Form.Item>
-
-
-                  <Form.Item
-                    className="username"
-                    label="Senha"
-                    name="password"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Por favor, informe a sua senha!",
-                      },
-                    ]}
-                  >
-                      <Input.Password
-      placeholder="Senha"
-      onChange={e => setSenha(e.target.value)} 
-      iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-    />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="remember"
-                    className="aligin-center"
-                    valuePropName="checked"
-                  >
-                    <Switch defaultChecked onChange={alteraLembrar} />
-                    Lembrar o usuário
-                  </Form.Item>
-
-                  <Form.Item>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      disabled={botaoDesabilitado}
-                      style={{ width: "100%" }}
-                      loading={carregando}
-                    >
-                      ACESSAR
-                    </Button>
-                  </Form.Item>
-                  <p className="font-semibold text-muted">
-                    Ainda não tem uma conta?{" "}
-                    <Link to="/sign-up" className="text-dark font-bold">
-                      Cadastrar
-                    </Link>
-                  </p>
-                </Form>
-              </Col>
-              <Col
-                className="sign-img"
-                style={{ padding: 12 }}
-                xs={{ span: 24 }}
-                lg={{ span: 12 }}
-                md={{ span: 12 }}
-              >
-                <img src={signinbg} alt="" />
-              </Col>
-            </Row>
-          </Content>
-          <Footer>
-            <p className="copyright">
-              {" "}
-              Copyright © 2022 - Klienta Gerencial{" "}
-            </p>
-          </Footer>
-        </Layout>
-      </>
-    );
-  }
+                    ACESSAR
+                  </Button>
+                </Form.Item>
+                <p className="font-semibold text-muted">
+                  Ainda não tem uma conta?{" "}
+                  <Link to="/sign-up" className="text-dark font-bold">
+                    Cadastrar
+                  </Link>
+                </p>
+              </Form>
+            </Col>
+            <Col
+              className="sign-img"
+              style={{ padding: 12 }}
+              xs={{ span: 24 }}
+              lg={{ span: 12 }}
+              md={{ span: 12 }}
+            >
+              <img src={signinbg} alt="" />
+            </Col>
+          </Row>
+        </Content>
+        <Footer>
+          <p className="copyright">
+            {" "}
+            Copyright © 2022 - Klienta Gerencial{" "}
+          </p>
+        </Footer>
+      </Layout>
+    </>
+  );
+}
 
