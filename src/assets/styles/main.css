@@ -3046,3 +3046,20 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   path {
   fill: #8c8c8c;
 }
+
+/* Klienta Gerencial */
+.table-striped-rows tr:nth-child(2n) td {
+  background-color: rgb(173, 198, 255)
+}
+.table-striped-rows thead {
+  background-color:  rgb(24, 100, 255)
+}
+
+.table-striped-rows .ant-table-thead>tr>th{
+  background-color:rgb(24, 144, 255);
+  color: #FFF
+}
+
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background: rgb(24, 100, 255)
+}
