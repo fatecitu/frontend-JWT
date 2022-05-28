@@ -14,11 +14,15 @@ import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 import Rotas from "./routes/rotas";
+import {ConfigProvider} from 'antd'
+import ptBR from 'antd/lib/locale/pt_BR';
 
 function App() {
   return (
     <div className="App">
+      <ConfigProvider locale={ptBR}>
       <Rotas />
+      </ConfigProvider>
     </div>
   );
 }

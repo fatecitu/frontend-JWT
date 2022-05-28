@@ -21,14 +21,12 @@ import {
   Button,
   List,
   Avatar,
-  Input,
   Drawer,
   Typography,
   Switch,
 } from "antd";
 
 import {
-  SearchOutlined,
   StarOutlined,
   TwitterOutlined,
   FacebookFilled,
@@ -277,7 +275,7 @@ function Header({
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
-              <NavLink to="/">Pages</NavLink>
+              <NavLink to="/">Página</NavLink>
             </Breadcrumb.Item>
             <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
               {name.replace("/", "")}
@@ -423,13 +421,9 @@ function Header({
           </Drawer>
           <Link to="/sign-in" className="btn-sign-in">
             {profile}
-            <span>Sign in</span>
+            <span>Logout</span>
           </Link>
-          <Input
-            className="header-search"
-            placeholder="Type here..."
-            prefix={<SearchOutlined />}
-          />
+         
         </Col>
       </Row>
     </>

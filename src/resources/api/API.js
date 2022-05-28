@@ -26,6 +26,21 @@ export const signIn = async (email, senha) => {
   return json
 }
 
+export const getFaturamento = async () => {
+  const token = localStorage.getItem('token')
+  const req = await fetch(`${BASE_API}/pedidosVendidos`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'access-token': token
+    }
+  })
+  const json = await req.json()
+  return json
+}
+
+
 export const logout = async () => {
   localStorage.removeItem('token')
   return null
