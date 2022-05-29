@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Table, message, Row, Col, Card, Radio, Tag } from 'antd'
+import { Table, message, Row, Col, Card, Button, Tag, Tooltip } from 'antd'
 import { getFaturamento } from '../resources/api/API'
+import { DownloadOutlined, ReloadOutlined } from '@ant-design/icons'
+import { CSVLink } from 'react-csv'
 
 
 export default function Faturamento() {
@@ -21,8 +23,20 @@ export default function Faturamento() {
   const onChange = (pagination, filters, sorter, extra) => {
     //console.log('params', pagination, filters, sorter, extra);
     setDadosFiltro(extra.currentDataSource)
-  };
+  }
+/*
+  const headers = [
+    { label: "Id", key: "_id" },
+    { label: "PV", key: "pv" },
+    { label: "Mês Inclusão", key: "mesInclusao" },
+    { label: "Data Inclusão", key: "dataInclusao" }
+  ];
 
+  
+  const groupByKey = (list, key) => list.reduce((hash, obj) => ({...hash, [obj[key]]:( hash[obj[key]] || [] ).concat(obj)}), {})
+const filtroMes = groupByKey(dadosFiltro, 'mesInclusao')
+console.log(filtroMes)
+*/
 
   const colunas = [
     {
@@ -32,26 +46,55 @@ export default function Faturamento() {
       defaultSortOrder: 'descend',
       sorter: (a, b) => a.pv - b.pv,
       filterSearch: true,
-    onFilter: (value, record) => record.pv.includes(value),
+      onFilter: (value, record) => record.pv.includes(value),
     },
     {
-      title: 'Data',
-      dataIndex: 'data_db',
-      key: 'data_db',
+      title: 'Inclusão',
+      dataIndex: 'dataInclusao_db',
+      key: 'dataInclusao_db',
       defaultSortOrder: 'descend',
-      render: data_db => new Date(data_db).toLocaleDateString(),
+      render: dataInclusao_db => new Date(dataInclusao_db).toLocaleDateString(),
       sorter: (a, b) => {
-        return a.data_db.localeCompare(b.data_db)
+        return a.dataInclusao_db.localeCompare(b.dataInclusao_db)
       },
+    },
+    {
+      title: 'Mês Inclusão',
+      dataIndex: 'mesInclusao',
+      key: 'mesInclusao',
+      filters: [
+        {
+          text: '01/2022',
+          value: '01/2022',
+        },
+        {
+          text: '02/2022',
+          value: '02/2022',
+        },
+        {
+          text: '03/2022',
+          value: '03/2022',
+        }, {
+          text: '04/2022',
+          value: '04/2022',
+        }, {
+          text: '05/2022',
+          value: '05/2022',
+        }, {
+          text: '06/2022',
+          value: '06/2022',
+        }
+      ],
+      onFilter: (value, record) => record.mesInclusao.indexOf(value) === 0,
     },
     {
       title: 'Faturamento',
       dataIndex: 'dataFaturamento_db',
       key: 'dataFaturamento_db',
       defaultSortOrder: 'descend',
-      render: dataFaturamento_db => dataFaturamento_db ? new Date(dataFaturamento_db).toLocaleDateString() :   <Tag color="magenta" key={dataFaturamento_db}>
-      {'A faturar'}
-</Tag>,
+      render: dataFaturamento_db => dataFaturamento_db ? new Date(dataFaturamento_db).toLocaleDateString() : <Tag color="magenta" key={dataFaturamento_db}>
+        {'A faturar'}
+      </Tag>,
       sorter: (a, b) => {
         return a.dataFaturamento_db.localeCompare(b.dataFaturamento_db)
       },
@@ -193,10 +236,23 @@ export default function Faturamento() {
           title="📈 Dados das Vendas / Faturamento"
           extra={
             <>
-              <Radio.Group onChange={onChange} defaultValue="F">
-                <Radio.Button value="F">Faturamento</Radio.Button>
-                <Radio.Button value="V">Venda</Radio.Button>
-              </Radio.Group>
+              <Tooltip placement="topLeft" title="Download dos dados para o Excel/Libre Calc">
+                <Button type="primary" shape="round" icon={<DownloadOutlined />} style={{ background: "#d46b08", borderColor: "#ffd591" }} disabled={carregando}>
+                  <CSVLink
+                    data={dadosFiltro}
+                    filename='pedidosCorona.csv'
+                    style={{ "textDecoration": "none", "color": "#fff" }}
+                  >
+                    Download
+                  </CSVLink>
+                </Button>
+              </Tooltip>
+              &nbsp;
+              <Tooltip placement="topLeft" title="Recarregar os dados do Omie">
+                <Button type="primary" shape="round" icon={<ReloadOutlined />} onClick={() => obtemFaturamento()}>
+                  Recarregar
+                </Button>
+              </Tooltip>
             </>
           }
         >
@@ -210,7 +266,7 @@ export default function Faturamento() {
               loading={carregando}
               bordered
               size="small"
-              pagination={{ defaultPageSize: 50}}
+              pagination={{ defaultPageSize: 50 }}
               scroll={{ x: 1500 }}
             />
           </div>
