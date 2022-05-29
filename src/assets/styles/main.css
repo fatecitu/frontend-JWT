@@ -3056,10 +3056,10 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 }
 
 .table-striped-rows .ant-table-thead>tr>th{
-  background-color:rgb(24, 144, 255);
+  background-color:rgb(144, 144, 144);
   color: #FFF
 }
 
 .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
-  background: rgb(24, 100, 255)
+  background: rgba(212, 107, 8, 0.5)
 }

@@ -32,17 +32,28 @@ export default function Faturamento() {
     { label: "Data Inclusão", key: "dataInclusao" }
   ];
 
-  
+
   const groupByKey = (list, key) => list.reduce((hash, obj) => ({...hash, [obj[key]]:( hash[obj[key]] || [] ).concat(obj)}), {})
 const filtroMes = groupByKey(dadosFiltro, 'mesInclusao')
 console.log(filtroMes)
+
+   filters: filterData(dadosFiltro)(i => i.mesInclusao),
+      onFilter: (value, record) => record.mesInclusao.indexOf(value) === 0,
+
+
+const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
+  text: formatter(item),
+  value: formatter(item)
+}))
 */
+
 
   const colunas = [
     {
       title: 'Pedido de Venda',
       dataIndex: 'pv',
       key: 'pv',
+      width: 40,
       defaultSortOrder: 'descend',
       sorter: (a, b) => a.pv - b.pv,
       filterSearch: true,
@@ -52,6 +63,7 @@ console.log(filtroMes)
       title: 'Inclusão',
       dataIndex: 'dataInclusao_db',
       key: 'dataInclusao_db',
+      width: 40,
       defaultSortOrder: 'descend',
       render: dataInclusao_db => new Date(dataInclusao_db).toLocaleDateString(),
       sorter: (a, b) => {
@@ -59,9 +71,10 @@ console.log(filtroMes)
       },
     },
     {
-      title: 'Mês Inclusão',
+      title: 'Mês Inc.',
       dataIndex: 'mesInclusao',
       key: 'mesInclusao',
+      width: 40,
       filters: [
         {
           text: '01/2022',
@@ -74,15 +87,13 @@ console.log(filtroMes)
         {
           text: '03/2022',
           value: '03/2022',
-        }, {
+        },
+        {
           text: '04/2022',
           value: '04/2022',
-        }, {
+        },        {
           text: '05/2022',
           value: '05/2022',
-        }, {
-          text: '06/2022',
-          value: '06/2022',
         }
       ],
       onFilter: (value, record) => record.mesInclusao.indexOf(value) === 0,
@@ -91,6 +102,7 @@ console.log(filtroMes)
       title: 'Faturamento',
       dataIndex: 'dataFaturamento_db',
       key: 'dataFaturamento_db',
+      width: 40,
       defaultSortOrder: 'descend',
       render: dataFaturamento_db => dataFaturamento_db ? new Date(dataFaturamento_db).toLocaleDateString() : <Tag color="magenta" key={dataFaturamento_db}>
         {'A faturar'}
@@ -98,6 +110,34 @@ console.log(filtroMes)
       sorter: (a, b) => {
         return a.dataFaturamento_db.localeCompare(b.dataFaturamento_db)
       },
+    },
+    {
+      title: 'Mês Fat.',
+      dataIndex: 'mesFaturamento',
+      key: 'mesFaturamento',
+      width: 40,
+      filters: [
+        {
+          text: '01/2022',
+          value: '01/2022',
+        },
+        {
+          text: '02/2022',
+          value: '02/2022',
+        },
+        {
+          text: '03/2022',
+          value: '03/2022',
+        },
+        {
+          text: '04/2022',
+          value: '04/2022',
+        },        {
+          text: '05/2022',
+          value: '05/2022',
+        }
+      ],
+      onFilter: (value, record) => record.mesFaturamento.indexOf(value) === 0,
     },
     {
       title: 'Projeto',
@@ -130,6 +170,38 @@ console.log(filtroMes)
         },
       ],
       onFilter: (value, record) => record.projeto.indexOf(value) === 0,
+    },
+    {
+      title: 'Depto',
+      dataIndex: 'departamento',
+      key: 'pv',
+      width: 50,
+      render: (departamento) => {
+        let color = departamento.length > 10 ? 'geekblue' : 'orange'
+        if (departamento === 'Não definido') {
+          color = 'volcano';
+        }
+        return (
+          <Tag color={color} key={departamento}>
+            {departamento.toUpperCase()}
+          </Tag>
+        );
+      },
+      filters: [
+        {
+          text: 'Semicondutores',
+          value: 'Semicondutores',
+        },
+        {
+          text: 'Tratamento',
+          value: 'Tratamento',
+        },
+        {
+          text: 'Não Definido',
+          value: 'Não definido',
+        },
+      ],
+      onFilter: (value, record) => record.departamento.indexOf(value) === 0,
     },
     {
       title: 'Devolvido',
@@ -184,6 +256,14 @@ console.log(filtroMes)
         }
       ],
       onFilter: (value, record) => record.cancelado.indexOf(value) === 0,
+    },
+    {
+      title: 'Categoria',
+      dataIndex: 'categoria',
+      key: 'categoria',
+      width: 40,
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.categoria - b.categoria
     },
     {
       title: () => {
@@ -277,5 +357,5 @@ console.log(filtroMes)
 }
 
 /* Todo
-https://mdpuneethreddy.medium.com/antd-table-export-to-csv-pdf-reactjs-typescript-fcd10addf223
+https://github.com/ant-design/ant-design/blob/f77f02051729cbfd4071fddcfc84bd871da174b7/components/table/demo/custom-filter-panel.md
 */
