@@ -231,12 +231,14 @@ function Home() {
   return (
     <>
       <div className="layout-content">
-        <Row className="rowgap-vbox" gutter={[8, 0]} >
-          <div style={{ margin: '8px', padding: "16px", background: blue[1], borderRadius: '24px', width:'30%' }}>
+   
+      <Row gutter={[24, 0]}>
+          <Col xs={24} sm={24} md={10} lg={10} xl={10} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{background: blue[5]}}>
             <Row gutter={8}>
               <Col span={24}>
-                <Title level={4} style={{color: blue[5]}}>
-                  Faturamento Tratamento
+                <Title level={4} style={{color: blue[2]}}>
+                 Faturamento Tratamento
                 </Title>
                 <Title level={5}>Mês</Title>
               </Col>
@@ -290,11 +292,13 @@ function Home() {
                 </Card>
               </Col>
             </Row>
-          </div>
-          <div style={{ margin: '8px', padding: "16px", background: blue[3], borderRadius: '24px', width:'30%' }}>
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{background: blue[2]}}>
             <Row gutter={8}>
               <Col span={24}>
-                <Title level={4} style={{color: blue[5]}}>
+                <Title level={4} style={{color: blue[8]}}>
                   Vendas Tratamento
                 </Title>
                 <Title level={5}>Mês</Title>
@@ -349,111 +353,17 @@ function Home() {
                 </Card>
               </Col>
             </Row>
-          </div>
-        </Row>
-
-        <Row className="rowgap-vbox" gutter={[8, 0]} >
-          <div style={{ margin: '8px', padding: "16px", background: orange[1], borderRadius: '24px', width:'30%' }}>
-            <Row gutter={8} >
-              <Col span={24}>
-                <Title level={4} style={{color: orange[5]}}>
-                  Faturamento Semicondutores
-                </Title>
-                <Title level={5}>Mês</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: orange[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: orange[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={5}>Dia</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: orange[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: orange[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
-          </div>
-          <div style={{ margin: '8px', padding: "16px", background: orange[3], borderRadius: '24px', width:'30%' }}>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={4} style={{color: orange[5]}}>
-                  Vendas Semicondutores
-                </Title>
-                <Title level={5}>Mês</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: orange[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: orange[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
-     
-          </div>
+            </Card>
+          </Col>
         </Row>
 
         <Row gutter={[24, 0]}>
-          <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{background: orange[3]}}>
+          <Col xs={24} sm={24} md={10} lg={10} xl={10} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{background: orange[5]}}>
             <Row gutter={8}>
               <Col span={24}>
-                <Title level={4} style={{color: orange[5]}}>
-                  Vendas Semicondutores
+                <Title level={4} style={{color: orange[2]}}>
+                 Faturamento Semicondutores
                 </Title>
                 <Title level={5}>Mês</Title>
               </Col>
@@ -510,8 +420,64 @@ function Home() {
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
-            <Card bordered={false} className="criclebox h-full">
-              bonito
+            <Card bordered={false} className="criclebox h-full" style={{background: orange[2]}}>
+            <Row gutter={8}>
+              <Col span={24}>
+                <Title level={4} style={{color: orange[8]}}>
+                  Vendas Semicondutores
+                </Title>
+                <Title level={5}>Mês</Title>
+              </Col>
+              <Col span={12}>
+                <Card>
+                  <Statistic
+                    title="Bruto"
+                    value={734128.52}
+                    precision={2}
+                    valueStyle={{ color: orange[8] }}
+                    prefix='R$'
+                  />
+                </Card>
+              </Col>
+              <Col span={12}>
+                <Card>
+                  <Statistic
+                    title="Líquido"
+                    value={985154.34}
+                    precision={2}
+                    valueStyle={{ color: orange[5] }}
+                    prefix='R$'
+                  />
+                </Card>
+              </Col>
+            </Row>
+            <Row gutter={8}>
+              <Col span={24}>
+                <Title level={5}>Dia</Title>
+              </Col>
+              <Col span={12}>
+                <Card>
+                  <Statistic
+                    title="Bruto"
+                    value={734128.52}
+                    precision={2}
+                    valueStyle={{ color: orange[8] }}
+                    prefix='R$'
+                  />
+                </Card>
+              </Col>
+              <Col span={12}>
+                <Card>
+                  <Statistic
+                    title="Líquido"
+                    value={985154.34}
+                    precision={2}
+                    valueStyle={{ color: orange[5] }}
+                    prefix='R$'
+                  />
+                </Card>
+              </Col>
+            </Row>
             </Card>
           </Col>
         </Row>
