@@ -9,7 +9,7 @@
   =========================================================
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import {
   Card,
@@ -33,6 +33,8 @@ import {
 } from "@ant-design/icons"
 import Paragraph from "antd/lib/typography/Paragraph"
 
+import { getDashboard } from '../resources/api/API'
+
 import Echart from "../components/chart/EChart"
 import LineChart from "../components/chart/LineChart"
 
@@ -50,12 +52,58 @@ import card from "../assets/images/info-card-1.jpg";
 
 
 
+
 function Home() {
-  const { Title, Text } = Typography;
+  const { Title, Text } = Typography
 
-  const onChange = (e) => console.log(`radio checked:${e.target.value}`);
+  const onChange = (e) => console.log(`radio checked:${e.target.value}`)
+  const [reverse, setReverse] = useState(false)
+  const [carregaSemiVendasMes, setCarregaSemiVendasMes] = useState(false)
+  const [carregaSemiVendasDia, setCarregaSemiVendasDia] = useState(false)
+  const [carregaTratVendasMes, setCarregaTratVendasMes] = useState(false)
+  const [carregaTratVendasDia, setCarregaTratVendasDia] = useState(false)
+  const [semiVendasMes, setSemiVendasMes] = useState([{}])
+  const [semiVendasDia, setSemiVendasDia] = useState([{}])
+  const [tratVendasMes, setTratVendasMes] = useState([{}])
+  const [tratVendasDia, setTratVendasDia] = useState([{}])
+  //Carregando registros na primeira vez
 
-  const [reverse, setReverse] = useState(false);
+  async function obtemDadosDashboard() {
+    //Definindo automaticamente o dia de hoje, primeiro dia do mês e último dia do mês
+    const hoje = new Date();
+    const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1)
+    const primeiro = primeiroDia.toISOString().split('T')[0]
+    const ultimoDia = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0)
+    const ultimo = ultimoDia.toISOString().split('T')[0]
+    const dia = hoje.toISOString().split('T')[0]
+
+    setCarregaSemiVendasMes(true)
+    let resSemiVendaMes = await getDashboard(primeiro, ultimo, 'Semicondutores')
+    resSemiVendaMes.ok === 0 ? message.error(`Não foi possível obter as Vendas Mensais do Semicondutores\nMotivo: ${resSemiVendaMes.codeName}`) : setSemiVendasMes(resSemiVendaMes)
+    setCarregaSemiVendasMes(false)
+
+    setCarregaSemiVendasDia(true)
+    let resSemiVendaDia = await getDashboard(dia, dia, 'Semicondutores')
+    resSemiVendaDia.ok === 0 ? message.error(`Não foi possível obter as Vendas Diárias do Semicondutores\nMotivo: ${resSemiVendaDia.codeName}`) : setSemiVendasDia(resSemiVendaDia)
+    setCarregaSemiVendasDia(false)
+
+    setCarregaTratVendasMes(true)
+    let resTratVendaMes = await getDashboard(primeiro, ultimo, 'Tratamento')
+    resTratVendaMes.ok === 0 ? message.error(`Não foi possível obter as Vendas Mensais do Tratamento\nMotivo: ${resTratVendaMes.codeName}`) : setTratVendasMes(resTratVendaMes)
+    setCarregaTratVendasMes(false)
+
+    setCarregaTratVendasDia(true)
+    let resTratVendaDia = await getDashboard(dia, dia, 'Tratamento')
+    resTratVendaDia.ok === 0 ? message.error(`Não foi possível obter as Vendas Diárias do Tratamento\nMotivo: ${resTratVendaDia.codeName}`) : setTratVendasDia(resTratVendaDia)
+    setCarregaTratVendasDia(false)
+  }
+
+  useEffect(() => {
+    obtemDadosDashboard()
+  }, [])
+
+
+
 
 
   const list = [
@@ -231,253 +279,279 @@ function Home() {
   return (
     <>
       <div className="layout-content">
-   
-      <Row gutter={[24, 0]}>
+
+        <Row gutter={[24, 0]}>
           <Col xs={24} sm={24} md={10} lg={10} xl={10} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{background: blue[5]}}>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={4} style={{color: blue[2]}}>
-                 Faturamento Tratamento
-                </Title>
-                <Title level={5}>Mês</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: blue[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: blue[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={5}>Dia</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: blue[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: blue[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
+            <Card bordered={false} className="criclebox h-full" style={{ background: blue[5] }}>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={4} style={{ color: blue[2] }}>
+                    Faturamento Tratamento
+                  </Title>
+                  <Title level={5}>Mês</Title>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                      title="Bruto"
+                      value={734128.52}
+                      precision={2}
+                      valueStyle={{ color: blue[8] }}
+                      prefix='R$'
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                      title="Líquido"
+                      value={985154.34}
+                      precision={2}
+                      valueStyle={{ color: blue[5] }}
+                      prefix='R$'
+                    />
+                  </Card>
+                </Col>
+              </Row>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={5}>Dia</Title>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                      title="Bruto"
+                      value={734128.52}
+                      precision={2}
+                      valueStyle={{ color: blue[8] }}
+                      prefix='R$'
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                      title="Líquido"
+                      value={985154.34}
+                      precision={2}
+                      valueStyle={{ color: blue[5] }}
+                      prefix='R$'
+                    />
+                  </Card>
+                </Col>
+              </Row>
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{background: blue[2]}}>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={4} style={{color: blue[8]}}>
-                  Vendas Tratamento
-                </Title>
-                <Title level={5}>Mês</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
+            <Card bordered={false} className="criclebox h-full" style={{ background: blue[2] }}>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={4} style={{ color: blue[8] }}>
+                    Vendas Tratamento
+                  </Title>
+                  <Title level={5}>Mês</Title>
+                </Col>
+                <Col span={12}>
+                  <Card>
                   <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: blue[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
+                        title="Bruto"
+                        value={tratVendasMes[0].total_valor_bruto}
+                        precision={window.screen.width >= 1280 ? 2 : 0}
+                        prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                        groupSeparator='.'
+                        decimalSeparator=','
+                        valueStyle={{ color: blue[8] }}
+                        loading={carregaTratVendasMes}
+                        />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card>
                   <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: blue[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={5}>Dia</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
+                        title="Líquido"
+                        value={tratVendasMes[0].total_valor_liquido}
+                        precision={window.screen.width >= 1280 ? 2 : 0}
+                        prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                        groupSeparator='.'
+                        decimalSeparator=','
+                        valueStyle={{ color: blue[5] }}
+                        loading={carregaTratVendasMes}
+                        />
+                  </Card>
+                </Col>
+              </Row>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={5}>Dia</Title>
+                </Col>
+                <Col span={12}>
+                  <Card>
                   <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: blue[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
+                        title="Bruto"
+                        value={tratVendasDia[0].total_valor_bruto}
+                        precision={window.screen.width >= 1280 ? 2 : 0}
+                        prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                        groupSeparator='.'
+                        decimalSeparator=','
+                        valueStyle={{ color: blue[8] }}
+                        loading={carregaTratVendasDia}
+                        />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card>
                   <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: blue[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
+                        title="Líquido"
+                        value={tratVendasDia[0].total_valor_liquido}
+                        precision={window.screen.width >= 1280 ? 2 : 0}
+                        prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                        groupSeparator='.'
+                        decimalSeparator=','
+                        valueStyle={{ color: blue[8] }}
+                        loading={carregaTratVendasDia}
+                        />
+                  </Card>
+                </Col>
+              </Row>
             </Card>
           </Col>
         </Row>
 
         <Row gutter={[24, 0]}>
           <Col xs={24} sm={24} md={10} lg={10} xl={10} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{background: orange[5]}}>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={4} style={{color: orange[2]}}>
-                 Faturamento Semicondutores
-                </Title>
-                <Title level={5}>Mês</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: orange[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: orange[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={5}>Dia</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: orange[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: orange[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
+            <Card bordered={false} className="criclebox h-full" style={{ background: orange[5] }}>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={4} style={{ color: orange[2] }}>
+                    Faturamento Semicondutores
+                  </Title>
+                  <Title level={5}>Mês</Title>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                        title="Bruto"
+                        value={734128.52}
+                        precision={2}
+                        valueStyle={{ color: orange[8] }}
+                      />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                      title="Líquido"
+                      value={985154.34}
+                      precision={2}
+                      valueStyle={{ color: orange[5] }}
+                      prefix='R$'
+                    />
+                  </Card>
+                </Col>
+              </Row>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={5}>Dia</Title>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                      title="Bruto"
+                      value={734128.52}
+                      precision={2}
+                      valueStyle={{ color: orange[8] }}
+                      prefix='R$'
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                      title="Líquido"
+                      value={985154.34}
+                      precision={2}
+                      valueStyle={{ color: orange[5] }}
+                      prefix='R$'
+                    />
+                  </Card>
+                </Col>
+              </Row>
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{background: orange[2]}}>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={4} style={{color: orange[8]}}>
-                  Vendas Semicondutores
-                </Title>
-                <Title level={5}>Mês</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
+            <Card bordered={false} className="criclebox h-full" style={{ background: orange[2] }}>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={4} style={{ color: orange[8] }}>
+                    Vendas Semicondutores
+                  </Title>
+                  <Title level={5}>Mês</Title>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                  
+                       <Statistic
+                        title="Bruto"
+                        value={semiVendasMes[0].total_valor_bruto}
+                        precision={window.screen.width >= 1280 ? 2 : 0}
+                        prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                        groupSeparator='.'
+                        decimalSeparator=','
+                        valueStyle={{ color: orange[8] }}
+                        loading={carregaSemiVendasMes}
+                      />
+
+                    {/*semiVendasMes[0].total_valor_bruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) */}
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card>
+                    <Statistic
+                      title="Líquido"
+                      value={semiVendasMes[0].total_valor_liquido}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      loading={carregaSemiVendasMes}
+                      valueStyle={{ color: orange[5] }}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={5}>Dia</Title>
+                </Col>
+                <Col span={12}>
+                  <Card>
                   <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: orange[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
+                        title="Bruto"
+                        value={semiVendasDia[0].total_valor_bruto}
+                        precision={window.screen.width >= 1280 ? 2 : 0}
+                        prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                        groupSeparator='.'
+                        decimalSeparator=','
+                        valueStyle={{ color: orange[8] }}
+                        loading={carregaSemiVendasDia}
+                      />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card>
                   <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: orange[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Title level={5}>Dia</Title>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Bruto"
-                    value={734128.52}
-                    precision={2}
-                    valueStyle={{ color: orange[8] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Líquido"
-                    value={985154.34}
-                    precision={2}
-                    valueStyle={{ color: orange[5] }}
-                    prefix='R$'
-                  />
-                </Card>
-              </Col>
-            </Row>
+                        title="Líquido"
+                        value={semiVendasDia[0].total_valor_liquido}
+                        precision={window.screen.width >= 1280 ? 2 : 0}
+                        prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                        groupSeparator='.'
+                        decimalSeparator=','
+                        valueStyle={{ color: orange[5] }}
+                        loading={carregaSemiVendasDia}
+                      />
+                  </Card>
+                </Col>
+              </Row>
             </Card>
           </Col>
         </Row>
