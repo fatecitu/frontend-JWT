@@ -91,9 +91,38 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
         {
           text: '04/2022',
           value: '04/2022',
-        },        {
+        },        
+        {
           text: '05/2022',
           value: '05/2022',
+        },
+        {
+          text: '06/2022',
+          value: '06/2022',
+        },
+        {
+          text: '07/2022',
+          value: '07/2022',
+        },
+        {
+          text: '08/2022',
+          value: '08/2022',
+        },
+        {
+          text: '09/2022',
+          value: '09/2022',
+        },
+        {
+          text: '10/2022',
+          value: '10/2022',
+        },
+        {
+          text: '11/2022',
+          value: '11/2022',
+        },
+        {
+          text: '12/2022',
+          value: '12/2022',
         }
       ],
       onFilter: (value, record) => record.mesInclusao.indexOf(value) === 0,
@@ -115,6 +144,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       title: 'Mês Fat.',
       dataIndex: 'mesFaturamento',
       key: 'mesFaturamento',
+      render: mesFaturamento => mesFaturamento!=='' ? mesFaturamento : <Tag color="magenta" key={mesFaturamento}>A faturar</Tag>,
       width: 40,
       filters: [
         {
@@ -135,6 +165,34 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
         },        {
           text: '05/2022',
           value: '05/2022',
+        },
+        {
+          text: '06/2022',
+          value: '06/2022',
+        },
+        {
+          text: '07/2022',
+          value: '07/2022',
+        },
+        {
+          text: '08/2022',
+          value: '08/2022',
+        },
+        {
+          text: '09/2022',
+          value: '09/2022',
+        },
+        {
+          text: '10/2022',
+          value: '10/2022',
+        },
+        {
+          text: '11/2022',
+          value: '11/2022',
+        },
+        {
+          text: '12/2022',
+          value: '12/2022',
         }
       ],
       onFilter: (value, record) => record.mesFaturamento.indexOf(value) === 0,
@@ -145,7 +203,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       key: 'pv',
       width: 50,
       render: (projeto) => {
-        let color = projeto.length > 10 ? 'geekblue' : 'orange'
+        let color = projeto.length > 10 ? 'orange' : 'geekblue'
         if (projeto === 'Não definido') {
           color = 'volcano';
         }
@@ -177,7 +235,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       key: 'pv',
       width: 50,
       render: (departamento) => {
-        let color = departamento.length > 10 ? 'geekblue' : 'orange'
+        let color = departamento.length > 10 ? 'orange' : 'geekblue'
         if (departamento === 'Não definido') {
           color = 'volcano';
         }

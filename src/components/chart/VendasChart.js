@@ -1,37 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { Area } from '@ant-design/plots';
+import React, { useState, useEffect, useCallback } from 'react'
+import { message, Typography, Skeleton, Spin } from 'antd'
+import { Line } from '@ant-design/plots'
+import { blue, orange } from '@ant-design/colors'
 
 const VendasChart = () => {
-  const [data, setData] = useState([]);
+  const { Title, Paragraph } = Typography
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    asyncFetch();
-  }, []);
+  
 
-  const asyncFetch = () => {
-    fetch('https://klientagerencial.herokuapp.com/api/pedidosVendidos/resumoFaturamento?inicio=2022-01-31&fim=2022-05-31&projeto=Tratamento')
+  const asyncFetch = useCallback(() => {
+    const hoje = new Date()
+    const ano = hoje.getFullYear()
+   setLoading(true)
+    fetch(`https://klientagerencial.herokuapp.com/api/pedidosVendidos/resumoFaturamento?inicio=${ano}-01-01&fim=${ano}-12-31&projeto=Todos`)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {
-        console.log('fetch data failed', error);
-      });
-  };
+        message.error(`Não foi possível obter os dados do Faturamento para o gráfico\nMotivo: ${error.message}`)
+      })
+    setLoading(false)
+  },[])
+
+  useEffect(() => {
+    asyncFetch();
+  }, [asyncFetch]);
+
+
   const config = {
     data,
     xField: 'mesFaturamento',
     yField: 'total_valor_bruto',
-    xAxis: {
-      range: [0, 1],
-      tickCount: 5,
+    seriesField: 'projeto',
+    yAxis: {
+      label: {
+        formatter: (v) => `${(v / 1000).toFixed(0)} Mil`,
+      },
     },
-    areaStyle: () => {
-      return {
-        fill: 'l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff',
-      };
+    legend: {
+      position: 'top',
+    },
+    theme: 'light',
+    renderer: 'svg',
+    smooth: true,
+    color: [orange[5], blue[5], '#FF0000'],
+    animation: {
+      appear: {
+        animation: 'path-in',
+        duration: 3000,
+      },
     },
   };
 
-  return <Area {...config} />;
+  return (
+    <>
+      <div className="linechart">
+        <div>
+          <Title level={5}>Faturamento Bruto Anual</Title>
+          <Paragraph className="lastweek">
+            Valores em Milhares de Reais 
+          </Paragraph>
+          {loading && <Spin size="large"  tip="Aguarde..."/>}
+        </div>
+      </div>
+      {loading || data.length === 0
+        ? <Skeleton />
+        : <Line {...config} />
+      }
+    </>
+  )
 };
 
 export default VendasChart
+
+
+
+
+//
