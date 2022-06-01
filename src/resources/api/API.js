@@ -40,7 +40,7 @@ export const getFaturamento = async () => {
   return json
 }
 
-export const getDashboard = async (inicio, fim, projeto) => {
+export const getDashboardVendas = async (inicio, fim, projeto) => {
   const token = localStorage.getItem('token')
   const req = await fetch(`${BASE_API}/pedidosVendidos/resumoVendas?inicio=${inicio}&fim=${fim}&projeto=${projeto}`, {
     method: 'GET',
@@ -54,6 +54,19 @@ export const getDashboard = async (inicio, fim, projeto) => {
   return json
 }
 
+export const getDashboardFaturamento = async (inicio, fim, projeto) => {
+  const token = localStorage.getItem('token')
+  const req = await fetch(`${BASE_API}/pedidosVendidos/resumoFaturamento?inicio=${inicio}&fim=${fim}&projeto=${projeto}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'access-token': token
+    }
+  })
+  const json = await req.json()
+  return json
+}
 
 export const logout = async () => {
   localStorage.removeItem('token')

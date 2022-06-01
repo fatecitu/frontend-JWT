@@ -11,9 +11,13 @@
 */
 
 // import { useState } from "react";
-import { Menu, Button } from "antd";
-import { NavLink, useLocation } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import { Menu, Button } from "antd"
+import { NavLink, useLocation } from "react-router-dom"
+import logo from "../../assets/images/logo.png"
+import {
+  WhatsAppOutlined
+} from "@ant-design/icons"
+
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -139,14 +143,14 @@ function Sidenav({ color }) {
         <Menu.Item className="menu-item-header" key="5">
           Cadastros Auxiliares
         </Menu.Item>
-        <Menu.Item key="7">
+        <Menu.Item key="7" disabled={true}>
           <NavLink to="/clientes">
             <span className="icon">{signin}</span>
             <span className="label">Clientes</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="8">
-          <NavLink to="/categorias">
+        <Menu.Item key="8" disabled={true}>
+          <NavLink to="/categorias" >
             <span className="icon">{signup}</span>
             <span className="label">Categorias</span>
           </NavLink>
@@ -165,7 +169,7 @@ function Sidenav({ color }) {
           <h6>Desenvolvido por:</h6>
           <p>Ricardo Leme</p>
           <Button type="primary" className="ant-btn-sm ant-btn-block">
-            Entrar em contato
+            <a href="https://api.whatsapp.com/send?phone=5511982674134&text=Olá!" target="_blank" rel="noreferrer"><WhatsAppOutlined />Entre em Contato</a>
           </Button>
         </div>
       </div>
