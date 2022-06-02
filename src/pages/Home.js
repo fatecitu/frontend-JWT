@@ -25,8 +25,9 @@ import {
 } from "@ant-design/icons"
 
 import { getDashboardVendas, getDashboardFaturamento } from '../resources/api/API'
-import LineChart from "../components/chart/LineChart"
-import VendasChart from "../components/chart/VendasChart"
+
+import FaturamentoChart from "../components/chart/FaturamentoChart"
+import FaturamentoDiarioChart from "../components/chart/FaturamentoDiarioChart"
 
 function Home() {
   const { Title } = Typography
@@ -59,7 +60,7 @@ function Home() {
     const ultimoDia = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0)
     const ultimo = ultimoDia.toISOString().split('T')[0]
     const dia = hoje.toISOString().split('T')[0]
-
+    
     setCarregaSemiVendasMes(true)
     let resSemiVendaMes = await getDashboardVendas(primeiro, ultimo, 'Semicondutores')
     resSemiVendaMes.ok === 0 ? message.error(`Não foi possível obter as Vendas Mensais do Semicondutores\nMotivo: ${resSemiVendaMes.codeName}`) : setSemiVendasMes(resSemiVendaMes)
@@ -419,12 +420,12 @@ function Home() {
         <Row gutter={[24, 0]}>
           <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <VendasChart />
+              <FaturamentoChart />
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <LineChart />
+              <FaturamentoDiarioChart />
             </Card>
           </Col>
         </Row>

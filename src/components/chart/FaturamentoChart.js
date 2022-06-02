@@ -48,7 +48,7 @@ const VendasChart = () => {
     animation: {
       appear: {
         animation: 'path-in',
-        duration: 3000,
+        duration: 0,
       },
     },
   };
