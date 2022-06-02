@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, message, Row, Col, Card, Button, Tag, Tooltip } from 'antd'
+import { Table, message, Row, Col, Card, Button, Tag, Tooltip, Popconfirm, Modal } from 'antd'
 import { getFaturamento } from '../resources/api/API'
 import { DownloadOutlined, ReloadOutlined } from '@ant-design/icons'
 import { CSVLink } from 'react-csv'
@@ -9,6 +9,7 @@ export default function Faturamento() {
   const [carregando, setCarregando] = useState(false)
   const [dadosTabela, setDadosTabela] = useState([])
   const [dadosFiltro, setDadosFiltro] = useState([])
+  const [modalVisible, setModalVisible] = useState(false);
 
   //Carregando registros na primeira vez
   useEffect(() => {
@@ -47,10 +48,28 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
 }))
 */
 
+const buscaDetalhe = async (registro) => {
+
+ message.loading('Aguarde...')
+ setModalVisible(true)
+ 
+}
 
   const colunas = [
     {
-      title: 'Pedido de Venda',
+      title: '👁',
+      width: 30,
+      dataIndex: 'operation',
+      fixed: 'left',
+      render: (_, record) =>
+        dadosFiltro.length >= 1 ? (
+          <Popconfirm title="Confirma a busca?" onConfirm={() => buscaDetalhe(record.pv)}>
+            <a>Detalhe</a>
+          </Popconfirm>
+        ) : null,
+    },
+    {
+      title: 'Nº Pedido',
       dataIndex: 'pv',
       key: 'pv',
       width: 40,
@@ -58,6 +77,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       sorter: (a, b) => a.pv - b.pv,
       filterSearch: true,
       onFilter: (value, record) => record.pv.includes(value),
+      fixed: 'left'
     },
     {
       title: 'Inclusão',
@@ -209,7 +229,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
         }
         return (
           <Tag color={color} key={projeto}>
-            {projeto.toUpperCase()}
+            {projeto}
           </Tag>
         );
       },
@@ -241,7 +261,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
         }
         return (
           <Tag color={color} key={departamento}>
-            {departamento.toUpperCase()}
+            {departamento}
           </Tag>
         );
       },
@@ -354,7 +374,8 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       },
       dataIndex: "valor_liquido",
       align: 'right',
-      width: 100
+      width: 100,
+      render: valor_liquido => Number(valor_liquido).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
     }
   ]
 
@@ -366,6 +387,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
   }
 
   return (
+    <>
     <Row gutter={[8, 0]}>
       <Col xs="24" xl={24}>
         <Card
@@ -411,6 +433,18 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
         </Card>
       </Col>
     </Row>
+    <Modal
+        title="Detalhes"
+        centered
+        visible={modalVisible}
+        onOk={() => setModalVisible(false)}
+        onCancel={() => setModalVisible(false)}
+      >
+        <p>PV: 053115</p>
+        <p>Cliente: Xxxxxxxxxxxxxxxx</p>
+        <p>NF: 0000018</p>
+      </Modal>
+      </>
   )
 }
 

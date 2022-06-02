@@ -117,7 +117,7 @@ function Home() {
             <Card bordered={false} className="criclebox h-full" style={{ background: blue[5] }}>
               <Row gutter={8}>
                 <Col span={24}>
-                  <Title level={4} style={{ color: blue[8] }}>
+                  <Title level={4} style={{ color: blue[2] }}>
                     Faturamento Tratamento
                   </Title>
                   <Title level={5}>Mês</Title>
@@ -266,7 +266,7 @@ function Home() {
             <Card bordered={false} className="criclebox h-full" style={{ background: orange[5] }}>
               <Row gutter={8}>
                 <Col span={24}>
-                  <Title level={4} style={{ color: orange[8] }}>
+                  <Title level={4} style={{ color: orange[2] }}>
                     Faturamento Semicondutores
                   </Title>
                   <Title level={5}>Mês</Title>

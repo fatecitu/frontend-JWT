@@ -8,10 +8,6 @@ const FaturamentoDiarioChart = () => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    asyncFetch();
-  }, []);
-
   const asyncFetch = useCallback(() => {
     const hoje = new Date()
     const ano = hoje.getFullYear()
@@ -26,13 +22,17 @@ const FaturamentoDiarioChart = () => {
     setLoading(false)
   },[])
 
+  useEffect(() => {
+    asyncFetch();
+  }, [asyncFetch]);
+
   const config = {
     data,
     isStack: true,
     xField: 'dataFaturamento',
     yField: 'total_valor_bruto',
     seriesField: 'projeto',
-    color: [orange[5], blue[5], '#FF0000'],
+    color: [orange[2], blue[2], '#FF0000'],
     columnWidthRatio: 0.8,
     xAxis: {
       label: {

@@ -110,8 +110,7 @@ export default function SignIn() {
                 <Form.Item
                   className="username"
                   label="Email"
-                  name="email"
-                  rules={[
+                       rules={[
                     {
                       required: true,
                       type: 'email',
@@ -127,7 +126,6 @@ export default function SignIn() {
                 <Form.Item
                   className="username"
                   label="Senha"
-                  name="password"
                   rules={[
                     {
                       required: true,
@@ -143,7 +141,6 @@ export default function SignIn() {
                 </Form.Item>
 
                 <Form.Item
-                  name="lembrar"
                   className="aligin-center"
                   valuePropName="checked"
                 >
