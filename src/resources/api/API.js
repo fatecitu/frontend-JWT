@@ -28,6 +28,20 @@ export const signIn = async (email, senha) => {
 
 export const getFaturamento = async () => {
   const token = localStorage.getItem('token')
+  const req = await fetch(`${BASE_API}/nfEmitidas`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'access-token': token
+    }
+  })
+  const json = await req.json()
+  return json
+}
+
+export const getVendas = async () => {
+  const token = localStorage.getItem('token')
   const req = await fetch(`${BASE_API}/pedidosVendidos`, {
     method: 'GET',
     headers: {

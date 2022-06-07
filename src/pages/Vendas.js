@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Table, message, Row, Col, Card, Button, Tag, Tooltip, Popconfirm, Modal } from 'antd'
-import { getFaturamento } from '../resources/api/API'
+import { getVendas } from '../resources/api/API'
 import { DownloadOutlined, ReloadOutlined } from '@ant-design/icons'
 import { CSVLink } from 'react-csv'
 
@@ -13,7 +13,7 @@ export default function Faturamento() {
 
   //Carregando registros na primeira vez
   useEffect(() => {
-    obtemFaturamento()
+    obtemVendas()
   }, [])
   // Quando mudar os dados da Tabela, mudamos também os dados do filtro
   useEffect(() => {
@@ -379,9 +379,9 @@ const buscaDetalhe = async (registro) => {
     }
   ]
 
-  async function obtemFaturamento() {
+  async function obtemVendas() {
     setCarregando(true)
-    let res = await getFaturamento()
+    let res = await getVendas()
     res.ok === 0 ? message.error(`Não foi possível obter a lista do faturamento\nMotivo: ${res.codeName}`) : setDadosTabela(res)
     setCarregando(false)
   }
@@ -393,7 +393,7 @@ const buscaDetalhe = async (registro) => {
         <Card
           bordered={false}
           className="criclebox tablespace mb-24"
-          title="📈 Dados das Vendas / Faturamento"
+          title="📈 Dados das Vendas (Pedido de Vendas)"
           extra={
             <>
               <Tooltip placement="topLeft" title="Download dos dados para o Excel/Libre Calc">
@@ -409,7 +409,7 @@ const buscaDetalhe = async (registro) => {
               </Tooltip>
               &nbsp;
               <Tooltip placement="topLeft" title="Recarregar os dados do Omie">
-                <Button type="primary" shape="round" icon={<ReloadOutlined />} onClick={() => obtemFaturamento()}>
+                <Button type="primary" shape="round" icon={<ReloadOutlined />} onClick={() => obtemVendas()}>
                   Recarregar
                 </Button>
               </Tooltip>
