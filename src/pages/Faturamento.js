@@ -307,6 +307,40 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       onFilter: (value, record) => record.departamento.indexOf(value) === 0,
     },
     {
+      title: () => {
+        var totalBruto = 0;
+        for (var i = 0; i < dadosFiltro.length; i++) {
+          totalBruto += dadosFiltro[i].valor_bruto;
+        }
+        return (
+          <div>
+            Valor Bruto <br /><span style={{ color: "#fefefe" }}><strong>R$ {Number((totalBruto).toFixed(2)).toLocaleString()}</strong></span>
+          </div>
+        );
+      },
+      dataIndex: "valor_bruto",
+      align: 'right',
+      width: 100,
+      render: valor_bruto => Number(valor_bruto).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+    },
+    {
+      title: () => {
+        var totalLiquido = 0;
+        for (var i = 0; i < dadosFiltro.length; i++) {
+          totalLiquido += dadosFiltro[i].valor_liquido;
+        }
+        return (
+          <div>
+            Valor Líquido <br /><span style={{ color: "#fefefe" }}><strong>R$ {Number((totalLiquido).toFixed(2)).toLocaleString()}</strong></span>
+          </div>
+        );
+      },
+      dataIndex: "valor_liquido",
+      align: 'right',
+      width: 100,
+      render: valor_liquido => Number(valor_liquido).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+    },
+    {
       title: 'Devolvido',
       dataIndex: 'pedidoDevolvido',
       key: 'pedidoDevolvido',
@@ -362,46 +396,13 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
     },
     {
       title: 'Cat.',
-      dataIndex: 'categoria',
-      key: 'categoria',
-      width: 50,
+      dataIndex: ['detalheCategoria','descricao'],
+      key: 'detalheCategoria.descricao',
+      width: 150,
       defaultSortOrder: 'descend',
-      sorter: (a, b) => a.categoria - b.categoria
+      sorter: (a, b) => a.detalheCategoria.descricao - b.detalheCategoria.descricao
     },
-    {
-      title: () => {
-        var totalBruto = 0;
-        for (var i = 0; i < dadosFiltro.length; i++) {
-          totalBruto += dadosFiltro[i].valor_bruto;
-        }
-        return (
-          <div>
-            Valor Bruto <br /><span style={{ color: "#fefefe" }}><strong>R$ {Number((totalBruto).toFixed(2)).toLocaleString()}</strong></span>
-          </div>
-        );
-      },
-      dataIndex: "valor_bruto",
-      align: 'right',
-      width: 100,
-      render: valor_bruto => Number(valor_bruto).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-    },
-    {
-      title: () => {
-        var totalLiquido = 0;
-        for (var i = 0; i < dadosFiltro.length; i++) {
-          totalLiquido += dadosFiltro[i].valor_liquido;
-        }
-        return (
-          <div>
-            Valor Líquido <br /><span style={{ color: "#fefefe" }}><strong>R$ {Number((totalLiquido).toFixed(2)).toLocaleString()}</strong></span>
-          </div>
-        );
-      },
-      dataIndex: "valor_liquido",
-      align: 'right',
-      width: 100,
-      render: valor_liquido => Number(valor_liquido).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-    }
+  
   ]
 
   async function obtemFaturamento() {
@@ -441,7 +442,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
             </>
           }
         >
-          <div className="table-responsive">
+        
             <Table
               className="table-striped-rows"
               rowKey={dadosTabela => dadosTabela._id}
@@ -451,10 +452,12 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
               loading={carregando}
               bordered
               size="small"
-              pagination={{ defaultPageSize: 50 }}
-              scroll={{ x: 1500 }}
+              /*pagination={{ defaultPageSize: 50 }}*/
+              scroll={{
+                x: 'max-content',
+              }}
             />
-          </div>
+
         </Card>
       </Col>
     </Row>
