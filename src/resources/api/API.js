@@ -40,6 +40,20 @@ export const getFaturamento = async () => {
   return json
 }
 
+export const getFaturamentoServico = async () => {
+  const token = localStorage.getItem('token')
+  const req = await fetch(`${BASE_API}/nfServico`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'access-token': token
+    }
+  })
+  const json = await req.json()
+  return json
+}
+
 export const getVendas = async () => {
   const token = localStorage.getItem('token')
   const req = await fetch(`${BASE_API}/pedidosVendidos`, {
@@ -70,7 +84,21 @@ export const getDashboardVendas = async (inicio, fim, projeto) => {
 
 export const getDashboardFaturamento = async (inicio, fim, projeto) => {
   const token = localStorage.getItem('token')
-  const req = await fetch(`${BASE_API}/pedidosVendidos/resumoFaturamento?inicio=${inicio}&fim=${fim}&projeto=${projeto}`, {
+  const req = await fetch(`${BASE_API}/nfEmitidas/resumoFaturamento?inicio=${inicio}&fim=${fim}&projeto=${projeto}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'access-token': token
+    }
+  })
+  const json = await req.json()
+  return json
+}
+
+export const getDashboardFaturamentoServico = async (inicio, fim, projeto) => {
+  const token = localStorage.getItem('token')
+  const req = await fetch(`${BASE_API}/nfServico/resumoFaturamento?inicio=${inicio}&fim=${fim}&projeto=${projeto}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',

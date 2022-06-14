@@ -24,7 +24,7 @@ import {
   RightOutlined
 } from "@ant-design/icons"
 
-import { getDashboardVendas, getDashboardFaturamento } from '../resources/api/API'
+import { getDashboardVendas, getDashboardFaturamento, getDashboardFaturamentoServico } from '../resources/api/API'
 
 import FaturamentoChart from "../components/chart/FaturamentoChart"
 import FaturamentoDiarioChart from "../components/chart/FaturamentoDiarioChart"
@@ -51,6 +51,17 @@ function Home() {
   const [tratFaturamentoMes, setTratFaturamentoMes] = useState([{total_valor_bruto:0, total_valor_liquido:0}])
   const [tratFaturamentoDia, setTratFaturamentoDia] = useState([{total_valor_bruto:0, total_valor_liquido:0}])
 
+
+    //Controle do Serviço
+    const [carregaSemiFaturamentoServMes, setCarregaSemiFaturamentoServMes] = useState(false)
+    const [carregaSemiFaturamentoServDia, setCarregaSemiFaturamentoServDia] = useState(false)
+    const [carregaTratFaturamentoServMes, setCarregaTratFaturamentoServMes] = useState(false)
+    const [carregaTratFaturamentoServDia, setCarregaTratFaturamentoServDia] = useState(false)
+    const [semiFaturamentoServMes, setSemiFaturamentoServMes] = useState([{total_valor_bruto:0, total_valor_liquido:0}])
+    const [semiFaturamentoServDia, setSemiFaturamentoServDia] = useState([{total_valor_bruto:0, total_valor_liquido:0}])
+    const [tratFaturamentoServMes, setTratFaturamentoServMes] = useState([{total_valor_bruto:0, total_valor_liquido:0}])
+    const [tratFaturamentoServDia, setTratFaturamentoServDia] = useState([{total_valor_bruto:0, total_valor_liquido:0}])
+
   //Carregando registros na primeira vez
   async function obtemDadosDashboard() {
     //Definindo automaticamente o dia de hoje, primeiro dia do mês e último dia do mês
@@ -61,6 +72,7 @@ function Home() {
     const ultimo = ultimoDia.toISOString().split('T')[0]
     const dia = hoje.toISOString().split('T')[0]
     
+    /* Vendas */
     setCarregaSemiVendasMes(true)
     let resSemiVendaMes = await getDashboardVendas(primeiro, ultimo, 'Semicondutores')
     resSemiVendaMes.ok === 0 ? message.error(`Não foi possível obter as Vendas Mensais do Semicondutores\nMotivo: ${resSemiVendaMes.codeName}`) : setSemiVendasMes(resSemiVendaMes)
@@ -80,7 +92,8 @@ function Home() {
     let resTratVendaDia = await getDashboardVendas(dia, dia, 'Tratamento')
     resTratVendaDia.ok === 0 ? message.error(`Não foi possível obter as Vendas Diárias do Tratamento\nMotivo: ${resTratVendaDia.codeName}`) : setTratVendasDia(resTratVendaDia)
     setCarregaTratVendasDia(false)
-
+    
+    /* Faturamento */
     setCarregaSemiFaturamentoMes(true)
     let resSemiFaturamentoMes = await getDashboardFaturamento(primeiro, ultimo, 'Semicondutores')
     resSemiFaturamentoMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal do Semicondutores\nMotivo: ${resSemiFaturamentoMes.codeName}`) : setSemiFaturamentoMes(resSemiFaturamentoMes)
@@ -100,6 +113,27 @@ function Home() {
     let resTratFaturamentoDia = await getDashboardFaturamento(dia, dia, 'Tratamento')
     resTratFaturamentoDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário do Tratamento\nMotivo: ${resTratFaturamentoDia.codeName}`) : setTratFaturamentoDia(resTratFaturamentoDia)
     setCarregaTratFaturamentoDia(false)
+
+       /* Faturamento Serviço */
+       setCarregaSemiFaturamentoServMes(true)
+       let resSemiFaturamentoServMes = await getDashboardFaturamentoServico(primeiro, ultimo, 'Semicondutores')
+       resSemiFaturamentoServMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal de Serviço do Semicondutores\nMotivo: ${resSemiFaturamentoServMes.codeName}`) : setSemiFaturamentoServMes(resSemiFaturamentoServMes)
+       setCarregaSemiFaturamentoServMes(false)
+   
+       setCarregaSemiFaturamentoServDia(true)
+       let resSemiFaturamentoServDia = await getDashboardFaturamentoServico(dia, dia, 'Semicondutores')
+       resSemiFaturamentoServDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário de Serviço do Semicondutores\nMotivo: ${resSemiFaturamentoServDia.codeName}`) : setSemiFaturamentoServDia(resSemiFaturamentoServDia)
+       setCarregaSemiFaturamentoServDia(false)
+   
+       setCarregaTratFaturamentoServMes(true)
+       let resTratFaturamentoServMes = await getDashboardFaturamentoServico(primeiro, ultimo, 'Tratamento')
+       resTratFaturamentoServMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal de Serviço do Tratamento\nMotivo: ${resTratFaturamentoServMes.codeName}`) : setTratFaturamentoServMes(resTratFaturamentoServMes)
+       setCarregaTratFaturamentoServMes(false)
+   
+       setCarregaTratFaturamentoServDia(true)
+       let resTratFaturamentoServDia = await getDashboardFaturamentoServico(dia, dia, 'Tratamento')
+       resTratFaturamentoServDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário do Tratamento\nMotivo: ${resTratFaturamentoServDia.codeName}`) : setTratFaturamentoServDia(resTratFaturamentoServDia)
+       setCarregaTratFaturamentoServDia(false)
   }
 
   useEffect(() => {
@@ -113,8 +147,8 @@ function Home() {
       <div className="layout-content">
 
         <Row gutter={[24, 0]}>
-        <Col xs={24} sm={24} md={12} lg={6} xl={6} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{ background: blue[5] }}>
+        <Col xs={24} sm={24} md={12} lg={8} xl={8} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{ background: blue[7] }}>
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: blue[2] }}>
@@ -186,8 +220,8 @@ function Home() {
               </Row>
             </Card>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={6} xl={6} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{ background: blue[2] }}>
+          <Col xs={24} sm={24} md={12} lg={8} xl={8} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{ background: blue[5] }}>
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: blue[8] }}>
@@ -259,11 +293,85 @@ function Home() {
               </Row>
             </Card>
           </Col>
+          <Col xs={24} sm={24} md={12} lg={8} xl={8} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{ background: blue[2] }}>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={4} style={{ color: blue[7] }}>
+                    Faturamento Serviço Tratamento
+                  </Title>
+                  <Title level={5}>Mês</Title>
+                </Col>
+                <Col span={12}>
+                  <Card loading={carregaTratFaturamentoServMes}>
+                    <Statistic
+                      title="Bruto"
+                      value={typeof tratFaturamentoServMes[0] === "undefined" ? 0 : tratFaturamentoServMes[0].total_valor_bruto}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      valueStyle={{ color: blue[8] }}
+                      loading={carregaTratFaturamentoServMes}
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card loading={carregaTratFaturamentoServMes}>
+                    <Statistic
+                      title="Líquido"
+                      value={typeof tratFaturamentoServMes[0] === "undefined" ? 0 : tratFaturamentoServMes[0].total_valor_liquido}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      valueStyle={{ color: blue[5] }}
+                      loading={carregaTratFaturamentoServMes}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={5}>Dia</Title>
+                </Col>
+                <Col span={12}>
+                  <Card loading={carregaTratFaturamentoServDia}>
+                    <Statistic
+                      title="Bruto"
+                      value={typeof tratFaturamentoServDia[0] === "undefined" ? 0 : tratFaturamentoServDia[0].total_valor_bruto}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      valueStyle={{ color: blue[8] }}
+                      loading={carregaTratFaturamentoServDia}
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card loading={carregaTratFaturamentoServDia}>
+                    <Statistic
+                      title="Líquido"
+                      value={typeof tratFaturamentoServDia[0] === "undefined" ? 0 : tratFaturamentoServDia[0].total_valor_liquido}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      valueStyle={{ color: blue[8] }}
+                      loading={carregaTratFaturamentoServDia}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+            </Card>
+          </Col>
+        
        {/* </Row>
 
   <Row gutter={[24, 0]}>*/}
-        <Col xs={24} sm={24} md={12} lg={6} xl={6} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{ background: orange[5] }}>
+        <Col xs={24} sm={24} md={12} lg={8} xl={8} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{ background: orange[8] }}>
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: orange[2] }}>
@@ -338,8 +446,8 @@ function Home() {
               </Row>
             </Card>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={6} xl={6} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{ background: orange[2] }}>
+          <Col xs={24} sm={24} md={12} lg={8} xl={8} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{ background: orange[5] }}>
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: orange[8] }}>
@@ -414,70 +522,99 @@ function Home() {
               </Row>
             </Card>
           </Col>
-        </Row>
-
-
-        <Row gutter={[24, 0]}>
-          <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
-            <Card bordered={false} className="criclebox h-full">
-              <FaturamentoChart />
-            </Card>
-          </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
-            <Card bordered={false} className="criclebox h-full">
-              <FaturamentoDiarioChart />
-            </Card>
-          </Col>
-        </Row>
-
-       
-
-        <Row gutter={[24, 0]}>
-          {/*
-          <Col xs={24} md={12} sm={24} lg={12} xl={14} className="mb-24">
-            <Card bordered={false} className="criclebox h-full">
-              <Row gutter>
-                <Col
-                  xs={24}
-                  md={12}
-                  sm={24}
-                  lg={12}
-                  xl={14}
-                  className="mobile-24"
-                >
-                  <div className="h-full col-content p-20">
-                    <div className="ant-muse">
-                      <Text>Built by developers</Text>
-                      <Title level={5}>Klienta Gerencial</Title>
-                      <Paragraph className="lastweek mb-36">
-                        From colors, cards, typography to complex elements, you
-                        will find the full documentation.
-                      </Paragraph>
-                    </div>
-                    <div className="card-footer">
-                      <a className="icon-move-right" href="#pablo">
-                        Read More
-                        {<RightOutlined />}
-                      </a>
-                    </div>
-                  </div>
+          <Col xs={24} sm={24} md={12} lg={8} xl={8} className="mb-24">
+            <Card bordered={false} className="criclebox h-full" style={{ background: orange[2] }}>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={4} style={{ color: orange[7] }}>
+                    Faturamento Serviço Semicondutores
+                  </Title>
+                  <Title level={5}>Mês</Title>
                 </Col>
-                <Col
-                  xs={24}
-                  md={12}
-                  sm={24}
-                  lg={12}
-                  xl={10}
-                  className="col-img"
-                >
-                  <div className="ant-cret text-right">
-                    <img src={card} alt="" className="border10" />
-                  </div>
+                <Col span={12}>
+                  <Card loading={carregaSemiFaturamentoServMes}>
+                    <Statistic
+                      title="Bruto"
+                      value={typeof semiFaturamentoServMes[0] === "undefined" ? 0 : semiFaturamentoServMes[0].total_valor_bruto}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      valueStyle={{ color: blue[8] }}
+                      loading={carregaSemiFaturamentoServMes}
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card loading={carregaSemiFaturamentoServMes}>
+                    <Statistic
+                      title="Líquido"
+                      value={typeof semiFaturamentoServMes[0] === "undefined" ? 0 : semiFaturamentoServMes[0].total_valor_liquido}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      valueStyle={{ color: blue[5] }}
+                      loading={carregaSemiFaturamentoServMes}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Title level={5}>Dia</Title>
+                </Col>
+                <Col span={12}>
+                  <Card loading={carregaSemiFaturamentoServDia}>
+                    <Statistic
+                      title="Bruto"
+                      value={typeof semiFaturamentoServDia[0] === "undefined" ? 0 : semiFaturamentoServDia[0].total_valor_bruto}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      valueStyle={{ color: blue[8] }}
+                      loading={carregaSemiFaturamentoServDia}
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card loading={carregaSemiFaturamentoServDia}>
+                    <Statistic
+                      title="Líquido"
+                      value={typeof semiFaturamentoServDia[0] === "undefined" ? 0 : semiFaturamentoServDia[0].total_valor_liquido}
+                      precision={window.screen.width >= 1280 ? 2 : 0}
+                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      groupSeparator='.'
+                      decimalSeparator=','
+                      valueStyle={{ color: blue[8] }}
+                      loading={carregaSemiFaturamentoServDia}
+                    />
+                  </Card>
                 </Col>
               </Row>
             </Card>
           </Col>
-  */}
+        </Row>
+
+{
+        <Row gutter={[24, 0]}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
+            <Card bordered={false} className="criclebox h-full">
+              <FaturamentoChart />
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
+            <Card bordered={false} className="criclebox h-full">
+             {/* <FaturamentoDiarioChart /> */}
+            </Card>
+          </Col>
+</Row>}
+
+       
+
+        <Row gutter={[24, 0]}>
+         
           <Col xs={24} md={12} sm={24} lg={12} xl={10} className="mb-24">
             <Card bordered={false} className="criclebox card-info-2 h-full">
               <div className="gradent h-full col-content">

@@ -13,8 +13,11 @@ const VendasChart = () => {
   const asyncFetch = useCallback(() => {
     const hoje = new Date()
     const ano = hoje.getFullYear()
+    const mes = hoje.getMonth()
+    const lastDayPrevMonth = new Date(ano, mes, 0)
+    const dia = lastDayPrevMonth.getDay()
    setLoading(true)
-    fetch(`https://klientagerencial.herokuapp.com/api/pedidosVendidos/resumoFaturamento?inicio=${ano}-01-01&fim=${ano}-12-31&projeto=Todos`)
+    fetch(`https://klientagerencial.herokuapp.com/api/nfEmitidas/resumoFaturamento?inicio=${ano}-01-01&fim=${ano}-${mes}-${dia}&projeto=Todos`)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {
