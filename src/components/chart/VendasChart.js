@@ -3,7 +3,7 @@ import { message, Typography, Skeleton, Spin } from 'antd'
 import { Line } from '@ant-design/plots'
 import { blue, orange } from '@ant-design/colors'
 
-const FaturamentoChart = () => {
+const VendasChart = () => {
   const { Title, Paragraph } = Typography
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
@@ -16,11 +16,11 @@ const FaturamentoChart = () => {
     const mes = hoje.getMonth()
 
    setLoading(true)
-    fetch(`https://klientagerencial.herokuapp.com/api/nfEmitidas/resumoFaturamento?inicio=${ano}-01-01&fim=${ano}-${mes}-31&projeto=Todos`)
+    fetch(`https://klientagerencial.herokuapp.com/api/pedidosVendidos/resumoVendas?inicio=${ano}-01-01&fim=${ano}-${mes}-31&projeto=Todos`)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {
-        message.error(`Não foi possível obter os dados do Faturamento para o gráfico\nMotivo: ${error.message}`)
+        message.error(`Não foi possível obter os dados das Vendas para o gráfico\nMotivo: ${error.message}`)
       })
     setLoading(false)
   },[])
@@ -32,7 +32,7 @@ const FaturamentoChart = () => {
 
   const config = {
     data,
-    xField: 'mesFaturamento',
+    xField: 'mesInclusao',
     yField: 'total_valor_bruto',
     seriesField: 'projeto',
     yAxis: {
@@ -59,7 +59,7 @@ const FaturamentoChart = () => {
     <>
       <div className="linechart">
         <div>
-          <Title level={5}>Faturamento Bruto Anual</Title>
+          <Title level={5}>Vendas Bruto Anual</Title>
           <Paragraph className="lastweek">
             Valores em Milhares de Reais 
           </Paragraph>
@@ -74,7 +74,7 @@ const FaturamentoChart = () => {
   )
 };
 
-export default FaturamentoChart
+export default VendasChart
 
 
 

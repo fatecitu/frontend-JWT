@@ -27,7 +27,7 @@ import {
 import { getDashboardVendas, getDashboardFaturamento, getDashboardFaturamentoServico } from '../resources/api/API'
 
 import FaturamentoChart from "../components/chart/FaturamentoChart"
-import FaturamentoDiarioChart from "../components/chart/FaturamentoDiarioChart"
+import VendasChart from "../components/chart/VendasChart"
 
 function Home() {
   const { Title } = Typography
@@ -148,7 +148,7 @@ function Home() {
 
         <Row gutter={[24, 0]}>
         <Col xs={24} sm={24} md={12} lg={8} xl={8} className="mb-24">
-            <Card bordered={false} className="criclebox h-full" style={{ background: blue[7] }}>
+            <Card bordered={false}  className="criclebox h-full" style={{ background: blue[7] }}>
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: blue[2] }}>
@@ -159,10 +159,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoMes}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof tratFaturamentoMes[0] === "undefined" ? 0 : tratFaturamentoMes[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[8] }}
@@ -173,10 +173,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoMes}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof tratFaturamentoMes[0] === "undefined" ? 0 : tratFaturamentoMes[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[5] }}
@@ -192,10 +192,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoDia}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof tratFaturamentoDia[0] === "undefined" ? 0 : tratFaturamentoDia[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[8] }}
@@ -206,13 +206,13 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoDia}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof tratFaturamentoDia[0] === "undefined" ? 0 : tratFaturamentoDia[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
-                      valueStyle={{ color: blue[8] }}
+                      valueStyle={{ color: blue[5] }}
                       loading={carregaTratFaturamentoDia}
                     />
                   </Card>
@@ -232,10 +232,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratVendasMes}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof tratVendasMes[0] === "undefined" ? 0 : tratVendasMes[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[8] }}
@@ -246,10 +246,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratVendasMes}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof tratVendasMes[0] === "undefined" ? 0 : tratVendasMes[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[5] }}
@@ -265,10 +265,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratVendasDia}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof tratVendasDia[0] === "undefined" ? 0 : tratVendasDia[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[8] }}
@@ -279,13 +279,13 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratVendasDia}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof tratVendasDia[0] === "undefined" ? 0 : tratVendasDia[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
-                      valueStyle={{ color: blue[8] }}
+                      valueStyle={{ color: blue[5] }}
                       loading={carregaTratVendasDia}
                     />
                   </Card>
@@ -298,17 +298,17 @@ function Home() {
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: blue[7] }}>
-                    Faturamento Serviço Tratamento
+                    Fat. Serviço Tratamento
                   </Title>
                   <Title level={5}>Mês</Title>
                 </Col>
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoServMes}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof tratFaturamentoServMes[0] === "undefined" ? 0 : tratFaturamentoServMes[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[8] }}
@@ -319,10 +319,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoServMes}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof tratFaturamentoServMes[0] === "undefined" ? 0 : tratFaturamentoServMes[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[5] }}
@@ -338,10 +338,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoServDia}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof tratFaturamentoServDia[0] === "undefined" ? 0 : tratFaturamentoServDia[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: blue[8] }}
@@ -352,13 +352,13 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoServDia}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof tratFaturamentoServDia[0] === "undefined" ? 0 : tratFaturamentoServDia[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
-                      valueStyle={{ color: blue[8] }}
+                      valueStyle={{ color: blue[5] }}
                       loading={carregaTratFaturamentoServDia}
                     />
                   </Card>
@@ -383,10 +383,10 @@ function Home() {
                   <Card loading={carregaSemiFaturamentoMes}>
 
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof semiFaturamentoMes[0] === "undefined" ? 0 : semiFaturamentoMes[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: orange[8] }}
@@ -399,10 +399,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaSemiFaturamentoMes}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof semiFaturamentoMes[0] === "undefined" ? 0 : semiFaturamentoMes[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       loading={carregaSemiFaturamentoMes}
@@ -418,10 +418,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoDia}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof semiFaturamentoDia[0] === "undefined" ? 0 : semiFaturamentoDia[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: orange[8] }}
@@ -432,10 +432,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratFaturamentoDia}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof semiFaturamentoDia[0] === "undefined" ? 0 : semiFaturamentoDia[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: orange[5] }}
@@ -459,10 +459,10 @@ function Home() {
                   <Card loading={carregaSemiVendasMes}>
 
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof semiVendasMes[0] === "undefined" ? 0 : semiVendasMes[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: orange[8] }}
@@ -475,10 +475,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaSemiVendasMes}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof semiVendasMes[0] === "undefined" ? 0 : semiVendasMes[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       loading={carregaSemiVendasMes}
@@ -494,10 +494,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratVendasDia}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof semiVendasDia[0] === "undefined" ? 0 : semiVendasDia[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: orange[8] }}
@@ -508,10 +508,10 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaTratVendasDia}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof semiVendasDia[0] === "undefined" ? 0 : semiVendasDia[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
                       valueStyle={{ color: orange[5] }}
@@ -527,20 +527,20 @@ function Home() {
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: orange[7] }}>
-                    Faturamento Serviço Semicondutores
+                    Fat. Serviço Semicondutores
                   </Title>
                   <Title level={5}>Mês</Title>
                 </Col>
                 <Col span={12}>
                   <Card loading={carregaSemiFaturamentoServMes}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof semiFaturamentoServMes[0] === "undefined" ? 0 : semiFaturamentoServMes[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
-                      valueStyle={{ color: blue[8] }}
+                      valueStyle={{ color: orange[8] }}
                       loading={carregaSemiFaturamentoServMes}
                     />
                   </Card>
@@ -548,13 +548,13 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaSemiFaturamentoServMes}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof semiFaturamentoServMes[0] === "undefined" ? 0 : semiFaturamentoServMes[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
-                      valueStyle={{ color: blue[5] }}
+                      valueStyle={{ color: orange[5] }}
                       loading={carregaSemiFaturamentoServMes}
                     />
                   </Card>
@@ -567,13 +567,13 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaSemiFaturamentoServDia}>
                     <Statistic
-                      title="Bruto"
+                      title="Bruto (R$)"
                       value={typeof semiFaturamentoServDia[0] === "undefined" ? 0 : semiFaturamentoServDia[0].total_valor_bruto}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
-                      valueStyle={{ color: blue[8] }}
+                      valueStyle={{ color: orange[8] }}
                       loading={carregaSemiFaturamentoServDia}
                     />
                   </Card>
@@ -581,13 +581,13 @@ function Home() {
                 <Col span={12}>
                   <Card loading={carregaSemiFaturamentoServDia}>
                     <Statistic
-                      title="Líquido"
+                      title="Líquido (R$)"
                       value={typeof semiFaturamentoServDia[0] === "undefined" ? 0 : semiFaturamentoServDia[0].total_valor_liquido}
-                      precision={window.screen.width >= 1280 ? 2 : 0}
-                      prefix={window.screen.width >= 1280 ? 'R$' : ''}
+                      precision={window.screen.width >= 1367 ? 2 : 0}
+                      prefix={window.screen.width >= 1367 ? 'R$' : ''}
                       groupSeparator='.'
                       decimalSeparator=','
-                      valueStyle={{ color: blue[8] }}
+                      valueStyle={{ color: orange[5] }}
                       loading={carregaSemiFaturamentoServDia}
                     />
                   </Card>
@@ -606,7 +606,7 @@ function Home() {
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-             {/* <FaturamentoDiarioChart /> */}
+             <VendasChart/>
             </Card>
           </Col>
 </Row>}
