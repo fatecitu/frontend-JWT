@@ -126,7 +126,7 @@ export const getDashboardFaturamentoServico = async (inicio, fim, projeto) => {
 
 export const getDashboardVendasServico = async (inicio, fim, projeto) => {
   const token = localStorage.getItem('token')
-  const req = await fetch(`${BASE_API}/osServico/resumoFaturamento?inicio=${inicio}&fim=${fim}&projeto=${projeto}`, {
+  const req = await fetch(`${BASE_API}/osServico/resumoVendas?inicio=${inicio}&fim=${fim}&projeto=${projeto}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
