@@ -304,7 +304,7 @@ function Home() {
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: blue[7] }}>
-                    Fat. Serviço Tratamento
+                    Vendas Serviço Tratamento
                   </Title>
                   <Title level={5}>Mês</Title>
                 </Col>
@@ -533,7 +533,7 @@ function Home() {
               <Row gutter={8}>
                 <Col span={24}>
                   <Title level={4} style={{ color: orange[7] }}>
-                    Fat. Serviço Semicondutores
+                    Vendas Serviço Semicondutores
                   </Title>
                   <Title level={5}>Mês</Title>
                 </Col>
