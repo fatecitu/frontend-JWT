@@ -25,7 +25,7 @@ import {
   RightOutlined, ReloadOutlined
 } from "@ant-design/icons"
 
-import { getDashboardVendas, getDashboardFaturamento, getDashboardFaturamentoServico } from '../resources/api/API'
+import { getDashboardVendas, getDashboardFaturamento, getDashboardVendasServico } from '../resources/api/API'
 
 import FaturamentoChart from "../components/chart/FaturamentoChart"
 import VendasChart from "../components/chart/VendasChart"
@@ -117,22 +117,22 @@ function Home() {
 
        /* Faturamento Serviço */
        setCarregaSemiFaturamentoServMes(true)
-       let resSemiFaturamentoServMes = await getDashboardFaturamentoServico(primeiro, ultimo, 'Semicondutores')
+       let resSemiFaturamentoServMes = await getDashboardVendasServico(primeiro, ultimo, 'Semicondutores')
        resSemiFaturamentoServMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal de Serviço do Semicondutores\nMotivo: ${resSemiFaturamentoServMes.codeName}`) : setSemiFaturamentoServMes(resSemiFaturamentoServMes)
        setCarregaSemiFaturamentoServMes(false)
    
        setCarregaSemiFaturamentoServDia(true)
-       let resSemiFaturamentoServDia = await getDashboardFaturamentoServico(dia, dia, 'Semicondutores')
+       let resSemiFaturamentoServDia = await getDashboardVendasServico(dia, dia, 'Semicondutores')
        resSemiFaturamentoServDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário de Serviço do Semicondutores\nMotivo: ${resSemiFaturamentoServDia.codeName}`) : setSemiFaturamentoServDia(resSemiFaturamentoServDia)
        setCarregaSemiFaturamentoServDia(false)
    
        setCarregaTratFaturamentoServMes(true)
-       let resTratFaturamentoServMes = await getDashboardFaturamentoServico(primeiro, ultimo, 'Tratamento')
+       let resTratFaturamentoServMes = await getDashboardVendasServico(primeiro, ultimo, 'Tratamento')
        resTratFaturamentoServMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal de Serviço do Tratamento\nMotivo: ${resTratFaturamentoServMes.codeName}`) : setTratFaturamentoServMes(resTratFaturamentoServMes)
        setCarregaTratFaturamentoServMes(false)
    
        setCarregaTratFaturamentoServDia(true)
-       let resTratFaturamentoServDia = await getDashboardFaturamentoServico(dia, dia, 'Tratamento')
+       let resTratFaturamentoServDia = await getDashboardVendasServico(dia, dia, 'Tratamento')
        resTratFaturamentoServDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário do Tratamento\nMotivo: ${resTratFaturamentoServDia.codeName}`) : setTratFaturamentoServDia(resTratFaturamentoServDia)
        setCarregaTratFaturamentoServDia(false)
   }

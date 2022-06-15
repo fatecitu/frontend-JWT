@@ -15,7 +15,7 @@ import { Menu, Button } from "antd"
 import { NavLink, useLocation } from "react-router-dom"
 import logo from "../../assets/images/logo.png"
 import {
-  WhatsAppOutlined, MoneyCollectOutlined, DollarCircleFilled, AuditOutlined 
+  WhatsAppOutlined, MoneyCollectOutlined, DollarCircleFilled, AuditOutlined, WalletOutlined 
 } from "@ant-design/icons"
 
 
@@ -144,7 +144,20 @@ function Sidenav({ color }) {
             <span className="label">Faturamento Serviço</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item className="menu-item-header" key="5">
+        <Menu.Item key="5">
+          <NavLink to="/vendasservico">
+            <span
+              className="icon"
+              style={{
+                background: page === "tables" ? color : "",
+              }}
+            >
+             <WalletOutlined />
+            </span>
+            <span className="label">Vendas Serviço</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item className="menu-item-header" key="6">
           Cadastros Auxiliares
         </Menu.Item>
         <Menu.Item key="7" disabled={true}>
