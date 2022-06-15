@@ -308,7 +308,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
                 <Button type="primary" shape="round" icon={<DownloadOutlined />} style={{ background: "#d46b08", borderColor: "#ffd591" }} disabled={carregando}>
                   <CSVLink
                     data={dadosFiltro}
-                    filename='pedidosCorona.csv'
+                    filename='servicos.csv'
                     style={{ "textDecoration": "none", "color": "#fff" }}
                   >
                     Download

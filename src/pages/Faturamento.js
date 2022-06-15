@@ -92,85 +92,12 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
           text: 'Devolução',
           value: 'Devolução',
         },
+        {
+          text: 'Remessa',
+          value: 'Remessa',
+        },
       ],
       onFilter: (value, record) => record.tipo.indexOf(value) === 0,
-    },
-    {
-      title: 'Razão Social',
-      dataIndex: 'razaoSocial',
-      key: 'razaoSocial',
-      width: 200,
-      render: razaoSocial => razaoSocial.substring(0,40),
-      defaultSortOrder: 'descend',
-      sorter: (a, b) => a.razaoSocial - b.razaoSocial
-    },
-    {
-      title: 'Inclusão',
-      dataIndex: 'dataInclusao_db',
-      key: 'dataInclusao_db',
-      width: 50,
-      defaultSortOrder: 'descend',
-      render: dataInclusao_db => new Date(dataInclusao_db).toLocaleDateString(),
-      sorter: (a, b) => {
-        return a.dataInclusao_db.localeCompare(b.dataInclusao_db)
-      },
-    },
-    {
-      title: 'Mês Inc.',
-      dataIndex: 'mesInclusao',
-      key: 'mesInclusao',
-      width: 50,
-      filters: [
-        {
-          text: '01/2022',
-          value: '01/2022',
-        },
-        {
-          text: '02/2022',
-          value: '02/2022',
-        },
-        {
-          text: '03/2022',
-          value: '03/2022',
-        },
-        {
-          text: '04/2022',
-          value: '04/2022',
-        },        
-        {
-          text: '05/2022',
-          value: '05/2022',
-        },
-        {
-          text: '06/2022',
-          value: '06/2022',
-        },
-        {
-          text: '07/2022',
-          value: '07/2022',
-        },
-        {
-          text: '08/2022',
-          value: '08/2022',
-        },
-        {
-          text: '09/2022',
-          value: '09/2022',
-        },
-        {
-          text: '10/2022',
-          value: '10/2022',
-        },
-        {
-          text: '11/2022',
-          value: '11/2022',
-        },
-        {
-          text: '12/2022',
-          value: '12/2022',
-        }
-      ],
-      onFilter: (value, record) => record.mesInclusao.indexOf(value) === 0,
     },
     {
       title: 'Emissão',
@@ -186,7 +113,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       },
     },
     {
-      title: 'Mês E.',
+      title: 'Mês Emissão',
       dataIndex: 'mesEmissao',
       key: 'mesEmissao',
       render: mesEmissao => mesEmissao!=='' ? mesEmissao : <Tag color="magenta" key={mesEmissao}>A faturar</Tag>,
@@ -320,7 +247,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       },
       dataIndex: "valor_bruto",
       align: 'right',
-      width: 100,
+      width: 50,
       render: valor_bruto => Number(valor_bruto).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
     },
     {
@@ -337,7 +264,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       },
       dataIndex: "valor_liquido",
       align: 'right',
-      width: 100,
+      width: 50,
       render: valor_liquido => Number(valor_liquido).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
     },
     {
@@ -395,6 +322,15 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       onFilter: (value, record) => record.pedidoCancelado.indexOf(value) === 0,
     },
     {
+      title: 'Razão Social',
+      dataIndex: 'razaoSocial',
+      key: 'razaoSocial',
+      width: 200,
+      render: razaoSocial => razaoSocial.substring(0,40),
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.razaoSocial - b.razaoSocial
+    },
+    {
       title: 'Cat.',
       dataIndex: ['detalheCategoria','descricao'],
       key: 'detalheCategoria.descricao',
@@ -426,7 +362,7 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
                 <Button type="primary" shape="round" icon={<DownloadOutlined />} style={{ background: "#d46b08", borderColor: "#ffd591" }} disabled={carregando}>
                   <CSVLink
                     data={dadosFiltro}
-                    filename='pedidosCorona.csv'
+                    filename='faturamento.csv'
                     style={{ "textDecoration": "none", "color": "#fff" }}
                   >
                     Download

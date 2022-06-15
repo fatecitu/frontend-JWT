@@ -56,7 +56,7 @@ const buscaDetalhe = async (registro) => {
 }
 
   const colunas = [
-    {
+    /*{
       title: '👁',
       width: 30,
       dataIndex: 'operation',
@@ -67,7 +67,7 @@ const buscaDetalhe = async (registro) => {
             <a>Detalhe</a>
           </Popconfirm>
         ) : null,
-    },
+    },*/
     {
       title: 'Nº Pedido',
       dataIndex: 'pv',
@@ -91,10 +91,10 @@ const buscaDetalhe = async (registro) => {
       },
     },
     {
-      title: 'Mês Inc.',
+      title: 'Mês Inclusão',
       dataIndex: 'mesInclusao',
       key: 'mesInclusao',
-      width: 40,
+      width: 50,
       filters: [
         {
           text: '01/2022',
@@ -146,76 +146,6 @@ const buscaDetalhe = async (registro) => {
         }
       ],
       onFilter: (value, record) => record.mesInclusao.indexOf(value) === 0,
-    },
-    {
-      title: 'Faturamento',
-      dataIndex: 'dataFaturamento_db',
-      key: 'dataFaturamento_db',
-      width: 40,
-      defaultSortOrder: 'descend',
-      render: dataFaturamento_db => dataFaturamento_db ? new Date(dataFaturamento_db).toLocaleDateString() : <Tag color="magenta" key={dataFaturamento_db}>
-        {'A faturar'}
-      </Tag>,
-      sorter: (a, b) => {
-        return a.dataFaturamento_db.localeCompare(b.dataFaturamento_db)
-      },
-    },
-    {
-      title: 'Mês Fat.',
-      dataIndex: 'mesFaturamento',
-      key: 'mesFaturamento',
-      render: mesFaturamento => mesFaturamento!=='' ? mesFaturamento : <Tag color="magenta" key={mesFaturamento}>A faturar</Tag>,
-      width: 40,
-      filters: [
-        {
-          text: '01/2022',
-          value: '01/2022',
-        },
-        {
-          text: '02/2022',
-          value: '02/2022',
-        },
-        {
-          text: '03/2022',
-          value: '03/2022',
-        },
-        {
-          text: '04/2022',
-          value: '04/2022',
-        },        {
-          text: '05/2022',
-          value: '05/2022',
-        },
-        {
-          text: '06/2022',
-          value: '06/2022',
-        },
-        {
-          text: '07/2022',
-          value: '07/2022',
-        },
-        {
-          text: '08/2022',
-          value: '08/2022',
-        },
-        {
-          text: '09/2022',
-          value: '09/2022',
-        },
-        {
-          text: '10/2022',
-          value: '10/2022',
-        },
-        {
-          text: '11/2022',
-          value: '11/2022',
-        },
-        {
-          text: '12/2022',
-          value: '12/2022',
-        }
-      ],
-      onFilter: (value, record) => record.mesFaturamento.indexOf(value) === 0,
     },
     {
       title: 'Projeto',
@@ -282,6 +212,40 @@ const buscaDetalhe = async (registro) => {
       onFilter: (value, record) => record.departamento.indexOf(value) === 0,
     },
     {
+      title: () => {
+        var totalBruto = 0;
+        for (var i = 0; i < dadosFiltro.length; i++) {
+          totalBruto += dadosFiltro[i].valor_bruto;
+        }
+        return (
+          <div>
+            Valor Bruto <br /><span style={{ color: "#fefefe" }}><strong>R$ {Number((totalBruto).toFixed(2)).toLocaleString()}</strong></span>
+          </div>
+        );
+      },
+      dataIndex: "valor_bruto",
+      align: 'right',
+      width: 50,
+      render: valor_bruto => Number(valor_bruto).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+    },
+    {
+      title: () => {
+        var totalLiquido = 0;
+        for (var i = 0; i < dadosFiltro.length; i++) {
+          totalLiquido += dadosFiltro[i].valor_liquido;
+        }
+        return (
+          <div>
+            Valor Líquido <br /><span style={{ color: "#fefefe" }}><strong>R$ {Number((totalLiquido).toFixed(2)).toLocaleString()}</strong></span>
+          </div>
+        );
+      },
+      dataIndex: "valor_liquido",
+      align: 'right',
+      width: 50,
+      render: valor_liquido => Number(valor_liquido).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+    },
+    {
       title: 'Devolvido',
       dataIndex: 'devolvido',
       key: 'devolvido',
@@ -343,40 +307,6 @@ const buscaDetalhe = async (registro) => {
       defaultSortOrder: 'descend',
       sorter: (a, b) => a.categoria - b.categoria
     },
-    {
-      title: () => {
-        var totalBruto = 0;
-        for (var i = 0; i < dadosFiltro.length; i++) {
-          totalBruto += dadosFiltro[i].valor_bruto;
-        }
-        return (
-          <div>
-            Valor Bruto <br /><span style={{ color: "#fefefe" }}><strong>R$ {Number((totalBruto).toFixed(2)).toLocaleString()}</strong></span>
-          </div>
-        );
-      },
-      dataIndex: "valor_bruto",
-      align: 'right',
-      width: 100,
-      render: valor_bruto => Number(valor_bruto).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-    },
-    {
-      title: () => {
-        var totalLiquido = 0;
-        for (var i = 0; i < dadosFiltro.length; i++) {
-          totalLiquido += dadosFiltro[i].valor_liquido;
-        }
-        return (
-          <div>
-            Valor Líquido <br /><span style={{ color: "#fefefe" }}><strong>R$ {Number((totalLiquido).toFixed(2)).toLocaleString()}</strong></span>
-          </div>
-        );
-      },
-      dataIndex: "valor_liquido",
-      align: 'right',
-      width: 100,
-      render: valor_liquido => Number(valor_liquido).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-    }
   ]
 
   async function obtemVendas() {
@@ -400,7 +330,7 @@ const buscaDetalhe = async (registro) => {
                 <Button type="primary" shape="round" icon={<DownloadOutlined />} style={{ background: "#d46b08", borderColor: "#ffd591" }} disabled={carregando}>
                   <CSVLink
                     data={dadosFiltro}
-                    filename='pedidosCorona.csv'
+                    filename='vendas.csv'
                     style={{ "textDecoration": "none", "color": "#fff" }}
                   >
                     Download
