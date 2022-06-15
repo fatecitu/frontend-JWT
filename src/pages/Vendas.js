@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, message, Row, Col, Card, Button, Tag, Tooltip, Popconfirm, Modal } from 'antd'
+import { Table, message, Row, Col, Card, Button, Tag, Tooltip, Modal } from 'antd'
 import { getVendas } from '../resources/api/API'
 import { DownloadOutlined, ReloadOutlined } from '@ant-design/icons'
 import { CSVLink } from 'react-csv'
@@ -48,12 +48,12 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
 }))
 */
 
-const buscaDetalhe = async (registro) => {
+/*const buscaDetalhe = async (registro) => {
 
  message.loading('Aguarde...')
  setModalVisible(true)
  
-}
+}*/
 
   const colunas = [
     /*{

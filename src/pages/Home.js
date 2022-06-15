@@ -17,11 +17,12 @@ import {
   Row,
   Typography,
   message,
-  Statistic
+  Statistic, 
+  Button
 } from "antd"
 import { blue, orange } from '@ant-design/colors'
 import {
-  RightOutlined
+  RightOutlined, ReloadOutlined
 } from "@ant-design/icons"
 
 import { getDashboardVendas, getDashboardFaturamento, getDashboardFaturamentoServico } from '../resources/api/API'
@@ -145,7 +146,12 @@ function Home() {
   return (
     <>
       <div className="layout-content">
-
+      <Button
+            type="link"
+            onClick={() => obtemDadosDashboard()}
+          >
+            <ReloadOutlined /> Atualizar
+          </Button>
         <Row gutter={[24, 0]}>
         <Col xs={24} sm={24} md={12} lg={8} xl={8} className="mb-24">
             <Card bordered={false}  className="criclebox h-full" style={{ background: blue[7] }}>
