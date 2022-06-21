@@ -1,5 +1,5 @@
-//const BASE_API = "https://klientagerencial.herokuapp.com/api"
-const BASE_API = "http://localhost:4000/api"
+const BASE_API = "https://klientagerencial.herokuapp.com/api"
+//const BASE_API = "http://localhost:4000/api"
 
 export const checkToken = async (token) => {
   const req = await fetch(`${BASE_API}/usuarios/token`, {
