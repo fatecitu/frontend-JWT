@@ -81,16 +81,20 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       sorter: (a, b) => a.tipo - b.tipo,
       filters: [
         {
-          text: 'Entrada',
-          value: 'Entrada',
-        },
-        {
           text: 'Saída',
           value: 'Saída',
         },
         {
           text: 'Devolução',
           value: 'Devolução',
+        },
+        {
+          text: 'Entrada',
+          value: 'Entrada',
+        },
+        {
+          text: 'Devolução Entrada',
+          value: 'Devolução Entrada',
         },
         {
           text: 'Remessa',
