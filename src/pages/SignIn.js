@@ -67,6 +67,8 @@ export default function SignIn() {
       let res = await signIn(email, senha)
       if (res.access_token) {
         localStorage.setItem("token", res.access_token)
+        let payload = JSON.parse(window.atob(res.access_token.split('.')[1]))
+        localStorage.setItem("usuario", payload.usuario.id)
         history.push("/dashboard")
       } else {
         message.error(`‼️Erro: ${res.errors[0].msg}`);

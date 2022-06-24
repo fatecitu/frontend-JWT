@@ -155,6 +155,7 @@ export const getDashboardVendasServico = async (inicio, fim, projeto) => {
 
 export const logout = async () => {
   localStorage.removeItem('token')
+  localStorage.removeItem('usuario')
   return null
 }
 
