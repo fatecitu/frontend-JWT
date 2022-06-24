@@ -27,12 +27,12 @@ export default function Faturamento() {
 
 
 const removePedido = async (numeroPV) => {
- message.loading(`Aguarde enquanto o PV ${numeroPV} é excluído`)
+ message.loading(`Aguarde enquanto o PV ${numeroPV} é excluído`, 3)
+ .then(() => message.success(`PV ${numeroPV} excluído do Klienta!`))
  let excluiPV = await getRemovePedido(numeroPV)
  if(excluiPV.errors) {
   message.error(excluiPV.errors[0].msg)
  }
- message.info(`PV ${numeroPV} excluído do Klienta!`)
  obtemVendas()
 }
 

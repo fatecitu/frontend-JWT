@@ -85,84 +85,85 @@ function Home() {
 
     /* Vendas */
     setCarregaSemiVendasMes(true)
+    setCarregaSemiVendasDia(true)
+    setCarregaTratVendasMes(true)
+    setCarregaTratVendasDia(true)
+    setCarregaSemiFaturamentoMes(true)
+    setCarregaSemiFaturamentoDia(true)
+    setCarregaTratFaturamentoMes(true)
+    setCarregaTratFaturamentoDia(true)
+    setCarregaSemiFaturamentoServMes(true)
+    setCarregaSemiFaturamentoServDia(true)
+    setCarregaTratFaturamentoServMes(true)
+    setCarregaTratFaturamentoServDia(true)
+    setCarregaSemiVendasServMes(true)
+    setCarregaSemiVendasServDia(true)
+    setCarregaTratVendasServMes(true)
+    setCarregaTratVendasServDia(true)
+
     let resSemiVendaMes = await getDashboardVendas(primeiro, ultimo, 'Semicondutores')
     resSemiVendaMes.ok === 0 ? message.error(`Não foi possível obter as Vendas Mensais do Semicondutores\nMotivo: ${resSemiVendaMes.codeName}`) : setSemiVendasMes(resSemiVendaMes)
     setCarregaSemiVendasMes(false)
-
-    setCarregaSemiVendasDia(true)
+  
     let resSemiVendaDia = await getDashboardVendas(dia, dia, 'Semicondutores')
     resSemiVendaDia.ok === 0 ? message.error(`Não foi possível obter as Vendas Diárias do Semicondutores\nMotivo: ${resSemiVendaDia.codeName}`) : setSemiVendasDia(resSemiVendaDia)
     setCarregaSemiVendasDia(false)
 
-    setCarregaTratVendasMes(true)
     let resTratVendaMes = await getDashboardVendas(primeiro, ultimo, 'Tratamento')
     resTratVendaMes.ok === 0 ? message.error(`Não foi possível obter as Vendas Mensais do Tratamento\nMotivo: ${resTratVendaMes.codeName}`) : setTratVendasMes(resTratVendaMes)
     setCarregaTratVendasMes(false)
-
-    setCarregaTratVendasDia(true)
+    
     let resTratVendaDia = await getDashboardVendas(dia, dia, 'Tratamento')
     resTratVendaDia.ok === 0 ? message.error(`Não foi possível obter as Vendas Diárias do Tratamento\nMotivo: ${resTratVendaDia.codeName}`) : setTratVendasDia(resTratVendaDia)
     setCarregaTratVendasDia(false)
 
     /* Faturamento */
-    setCarregaSemiFaturamentoMes(true)
     let resSemiFaturamentoMes = await getDashboardFaturamento(primeiro, ultimo, 'Semicondutores')
     resSemiFaturamentoMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal do Semicondutores\nMotivo: ${resSemiFaturamentoMes.codeName}`) : setSemiFaturamentoMes(resSemiFaturamentoMes)
     setCarregaSemiFaturamentoMes(false)
 
-    setCarregaSemiFaturamentoDia(true)
     let resSemiFaturamentoDia = await getDashboardFaturamento(dia, dia, 'Semicondutores')
     resSemiFaturamentoDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário do Semicondutores\nMotivo: ${resSemiFaturamentoDia.codeName}`) : setSemiFaturamentoDia(resSemiFaturamentoDia)
     setCarregaSemiFaturamentoDia(false)
-
-    setCarregaTratFaturamentoMes(true)
+    
     let resTratFaturamentoMes = await getDashboardFaturamento(primeiro, ultimo, 'Tratamento')
     resTratFaturamentoMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal do Tratamento\nMotivo: ${resTratFaturamentoMes.codeName}`) : setTratFaturamentoMes(resTratFaturamentoMes)
     setCarregaTratFaturamentoMes(false)
 
-    setCarregaTratFaturamentoDia(true)
     let resTratFaturamentoDia = await getDashboardFaturamento(dia, dia, 'Tratamento')
     resTratFaturamentoDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário do Tratamento\nMotivo: ${resTratFaturamentoDia.codeName}`) : setTratFaturamentoDia(resTratFaturamentoDia)
     setCarregaTratFaturamentoDia(false)
 
     /* Faturamento Serviço */
-    setCarregaSemiFaturamentoServMes(true)
     let resSemiFaturamentoServMes = await getDashboardFaturamentoServico(primeiro, ultimo, 'Semicondutores')
     resSemiFaturamentoServMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal de Serviço do Semicondutores\nMotivo: ${resSemiFaturamentoServMes.codeName}`) : setSemiFaturamentoServMes(resSemiFaturamentoServMes)
     setCarregaSemiFaturamentoServMes(false)
 
-    setCarregaSemiFaturamentoServDia(true)
     let resSemiFaturamentoServDia = await getDashboardFaturamentoServico(dia, dia, 'Semicondutores')
     resSemiFaturamentoServDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário de Serviço do Semicondutores\nMotivo: ${resSemiFaturamentoServDia.codeName}`) : setSemiFaturamentoServDia(resSemiFaturamentoServDia)
     setCarregaSemiFaturamentoServDia(false)
 
-    setCarregaTratFaturamentoServMes(true)
     let resTratFaturamentoServMes = await getDashboardFaturamentoServico(primeiro, ultimo, 'Tratamento')
     resTratFaturamentoServMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal de Serviço do Tratamento\nMotivo: ${resTratFaturamentoServMes.codeName}`) : setTratFaturamentoServMes(resTratFaturamentoServMes)
     setCarregaTratFaturamentoServMes(false)
 
-    setCarregaTratFaturamentoServDia(true)
     let resTratFaturamentoServDia = await getDashboardFaturamentoServico(dia, dia, 'Tratamento')
     resTratFaturamentoServDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário do Tratamento\nMotivo: ${resTratFaturamentoServDia.codeName}`) : setTratFaturamentoServDia(resTratFaturamentoServDia)
     setCarregaTratFaturamentoServDia(false)
 
     /* Vendas Serviço */
-    setCarregaSemiVendasServMes(true)
     let resSemiVendasServMes = await getDashboardVendasServico(primeiro, ultimo, 'Semicondutores')
     resSemiVendasServMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal de Serviço do Semicondutores\nMotivo: ${resSemiVendasServMes.codeName}`) : setSemiVendasServMes(resSemiVendasServMes)
     setCarregaSemiVendasServMes(false)
-
-    setCarregaSemiVendasServDia(true)
+    
     let resSemiVendasServDia = await getDashboardVendasServico(dia, dia, 'Semicondutores')
     resSemiVendasServDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário de Serviço do Semicondutores\nMotivo: ${resSemiVendasServDia.codeName}`) : setSemiVendasServDia(resSemiVendasServDia)
     setCarregaSemiVendasServDia(false)
 
-    setCarregaTratVendasServMes(true)
     let resTratVendasServMes = await getDashboardVendasServico(primeiro, ultimo, 'Tratamento')
     resTratVendasServMes.ok === 0 ? message.error(`Não foi possível obter o Faturamento Mensal de Serviço do Tratamento\nMotivo: ${resTratVendasServMes.codeName}`) : setTratVendasServMes(resTratVendasServMes)
     setCarregaTratVendasServMes(false)
 
-    setCarregaTratVendasServDia(true)
     let resTratVendasServDia = await getDashboardVendasServico(dia, dia, 'Tratamento')
     resTratVendasServDia.ok === 0 ? message.error(`Não foi possível obter o Faturamento Diário do Tratamento\nMotivo: ${resTratVendasServDia.codeName}`) : setTratVendasServDia(resTratVendasServDia)
     setCarregaTratVendasServDia(false)
