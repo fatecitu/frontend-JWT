@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Table, message, Row, Col, Card, Button, Tag, Tooltip, Modal } from 'antd'
-import { getVendas } from '../resources/api/API'
+import { Table, message, Row, Col, Card, Button, Tag, Tooltip, Popconfirm } from 'antd'
+import { getVendas, getRemovePedido } from '../resources/api/API'
 import { DownloadOutlined, ReloadOutlined } from '@ant-design/icons'
 import { CSVLink } from 'react-csv'
 
@@ -9,7 +9,6 @@ export default function Faturamento() {
   const [carregando, setCarregando] = useState(false)
   const [dadosTabela, setDadosTabela] = useState([])
   const [dadosFiltro, setDadosFiltro] = useState([])
-  const [modalVisible, setModalVisible] = useState(false);
 
   //Carregando registros na primeira vez
   useEffect(() => {
@@ -25,49 +24,31 @@ export default function Faturamento() {
     //console.log('params', pagination, filters, sorter, extra);
     setDadosFiltro(extra.currentDataSource)
   }
-/*
-  const headers = [
-    { label: "Id", key: "_id" },
-    { label: "PV", key: "pv" },
-    { label: "Mês Inclusão", key: "mesInclusao" },
-    { label: "Data Inclusão", key: "dataInclusao" }
-  ];
 
 
-  const groupByKey = (list, key) => list.reduce((hash, obj) => ({...hash, [obj[key]]:( hash[obj[key]] || [] ).concat(obj)}), {})
-const filtroMes = groupByKey(dadosFiltro, 'mesInclusao')
-console.log(filtroMes)
-
-   filters: filterData(dadosFiltro)(i => i.mesInclusao),
-      onFilter: (value, record) => record.mesInclusao.indexOf(value) === 0,
-
-
-const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
-  text: formatter(item),
-  value: formatter(item)
-}))
-*/
-
-/*const buscaDetalhe = async (registro) => {
-
- message.loading('Aguarde...')
- setModalVisible(true)
- 
-}*/
+const removePedido = async (numeroPV) => {
+ message.loading(`Aguarde enquanto o PV ${numeroPV} é excluído`)
+ let excluiPV = await getRemovePedido(numeroPV)
+ if(excluiPV.errors) {
+  message.error(excluiPV.errors[0].msg)
+ }
+ message.info(`PV ${numeroPV} excluído do Klienta!`)
+ obtemVendas()
+}
 
   const colunas = [
-    /*{
-      title: '👁',
-      width: 30,
+    {
+      title: '🗑',
+      width: 20,
       dataIndex: 'operation',
       fixed: 'left',
       render: (_, record) =>
         dadosFiltro.length >= 1 ? (
-          <Popconfirm title="Confirma a busca?" onConfirm={() => buscaDetalhe(record.pv)}>
-            <a>Detalhe</a>
+          <Popconfirm title="Confirma a exclusão do PV?" onConfirm={() => removePedido(record.pv)}>
+            <a title="Excluir o PV do Klienta">🗑</a>
           </Popconfirm>
         ) : null,
-    },*/
+    },
     {
       title: 'Nº Pedido',
       dataIndex: 'pv',
@@ -300,6 +281,24 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       onFilter: (value, record) => record.cancelado.indexOf(value) === 0,
     },
     {
+      title: 'Excluído',
+      dataIndex: 'excluido',
+      key: 'excluido',
+      render: excluido => excluido === 'S' ? '✔️' : '❎',
+      width: 40,
+      filters: [
+        {
+          text: '✔️Sim',
+          value: 'S',
+        },
+        {
+          text: '❎Não',
+          value: 'N',
+        }
+      ],
+      onFilter: (value, record) => record.excluido.indexOf(value) === 0,
+    },
+    {
       title: 'Categoria',
       dataIndex: 'categoria',
       key: 'categoria',
@@ -363,17 +362,6 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
         </Card>
       </Col>
     </Row>
-    <Modal
-        title="Detalhes"
-        centered
-        visible={modalVisible}
-        onOk={() => setModalVisible(false)}
-        onCancel={() => setModalVisible(false)}
-      >
-        <p>PV: 053115</p>
-        <p>Cliente: Xxxxxxxxxxxxxxxx</p>
-        <p>NF: 0000018</p>
-      </Modal>
       </>
   )
 }

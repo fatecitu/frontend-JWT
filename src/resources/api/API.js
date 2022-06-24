@@ -83,6 +83,20 @@ export const getVendas = async () => {
   return json
 }
 
+export const getRemovePedido = async (pv) => {
+  const token = localStorage.getItem('token')
+  const req = await fetch(`${BASE_API}/pedidosVendidos/${pv}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'access-token': token
+    }
+  })
+  const json = await req.json()
+  return json
+}
+
 export const getDashboardVendas = async (inicio, fim, projeto) => {
   const token = localStorage.getItem('token')
   const req = await fetch(`${BASE_API}/pedidosVendidos/resumoVendas?inicio=${inicio}&fim=${fim}&projeto=${projeto}`, {
