@@ -236,9 +236,9 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
     },
     {
       title: 'Cancelado',
-      dataIndex: 'cancelado',
-      key: 'cancelado',
-      render: cancelado => cancelado === 'S' ? '✔️' : '❎',
+      dataIndex: 'cancelada',
+      key: 'cancelada',
+      render: cancelada => cancelada === 'S' ? '✔️' : '❎',
       width: 40,
       filters: [
         {
