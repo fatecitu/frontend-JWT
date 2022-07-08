@@ -10,7 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import React, { useState, useEffect } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import {
   Layout,
   Button,
@@ -161,12 +161,7 @@ export default function SignIn() {
                     ACESSAR
                   </Button>
                 </Form.Item>
-                <p className="font-semibold text-muted">
-                  Ainda não tem uma conta?{" "}
-                  <Link to="/sign-up" className="text-dark font-bold">
-                    Cadastrar
-                  </Link>
-                </p>
+               
               </Form>
             </Col>
             <Col

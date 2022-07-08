@@ -257,6 +257,8 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       dataIndex: "valor_bruto",
       align: 'right',
       width: 100,
+      defaultSortOrder: 'ascend',
+      sorter: (a, b) => a.valor_bruto - b.valor_bruto,
       render: valor_bruto => Number(valor_bruto).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
     },
     {
@@ -274,6 +276,8 @@ const filterData = dadosTabela => formatter => dadosTabela.map( item => ({
       dataIndex: "valor_liquido",
       align: 'right',
       width: 100,
+      defaultSortOrder: 'ascend',
+      sorter: (a, b) => a.valor_liquido - b.valor_liquido,
       render: valor_liquido => Number(valor_liquido).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
     },
      {

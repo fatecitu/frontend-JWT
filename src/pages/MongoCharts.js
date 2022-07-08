@@ -1,0 +1,1 @@
+<iframe style="background: #F1F5F4;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"  src="https://charts.mongodb.com/charts-project-0-ubgrr/embed/dashboards?id=25b57aeb-150b-43d2-9d79-34c467cb8eea&theme=light&autoRefresh=true&maxDataAge=3600&showTitleAndDesc=false&scalingWidth=scale&scalingHeight=scale"></iframe>

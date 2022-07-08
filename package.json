@@ -1,6 +1,6 @@
 {
   "name": "klienta-gerencial-frontend",
-  "version": "1.0.0",
+  "version": "1.22.19",
   "private": true,
   "dependencies": {
     "@ant-design/charts": "^1.3.6",
