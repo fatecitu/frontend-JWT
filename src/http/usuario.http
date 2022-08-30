@@ -1,0 +1,13 @@
+###
+// POST - Inclui um novo usuário
+@baseURL = https://doalize-backend.herokuapp.com/api
+POST {{baseURL}}/usuarios
+Content-Type: application/json
+
+{
+   "nome": "Prof. Ricardo",
+   "email": "ricardo.leme@fatec.sp.gov.br",
+   "senha": "Professor@123",
+   "tipo": "Pessoa Física",
+   "documento": "123.456.789-04"
+}

@@ -1,28 +1,15 @@
-/*!
-  =========================================================
-  * Muse Ant Design Dashboard - v1.0.0
-  =========================================================
-  * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-  * Copyright 2021 Creative Tim (https://www.creative-tim.com)
-  * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-  * Coded by Creative Tim
-  =========================================================
-  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// import { useState } from "react";
 import { Menu, Button } from "antd"
 import { NavLink, useLocation } from "react-router-dom"
 import logo from "../../assets/images/logo.png"
 import {
-  WhatsAppOutlined, MoneyCollectOutlined, DollarCircleFilled, AuditOutlined, WalletOutlined 
+  WhatsAppOutlined, MoneyCollectOutlined
 } from "@ant-design/icons"
 
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
   const page = pathname.replace("/", "");
-  const usuarioId = localStorage.getItem("usuario")!=='628d43daec13df64c5018ba4'
+  const usuarioId = localStorage.getItem("usuario")!=='algumUsuario'
 
   const dashboard = [
     <svg
@@ -54,7 +41,7 @@ function Sidenav({ color }) {
     <>
       <div className="brand">
         <img src={logo} alt="" />
-        <span>Klienta Gerencial</span>
+        <span>App JWT</span>
       </div>
       <hr />
       <Menu theme="light" mode="inline">
@@ -72,7 +59,7 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
         <Menu.Item className="menu-item-header" key="6">
-          Tabelas Auxiliares
+          Cadastros Auxiliares
         </Menu.Item>
         <Menu.Item key="2" disabled={usuarioId}>
           <NavLink to="/vendas">
@@ -87,45 +74,7 @@ function Sidenav({ color }) {
             <span className="label">Vendas</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="3" disabled={usuarioId}>
-          <NavLink to="/faturamento">
-            <span
-              className="icon"
-              style={{
-                background: page === "tables" ? color : "",
-              }}
-            >
-              < DollarCircleFilled />
-            </span>
-            <span className="label">Faturamento</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="4" disabled={usuarioId}>
-          <NavLink to="/faturamentoservico">
-            <span
-              className="icon"
-              style={{
-                background: page === "tables" ? color : "",
-              }}
-            >
-             <AuditOutlined />
-            </span>
-            <span className="label">Faturamento Serviço</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="5" disabled={usuarioId}>
-          <NavLink to="/vendasservico">
-            <span
-              className="icon"
-              style={{
-                background: page === "tables" ? color : "",
-              }}
-            >
-             <WalletOutlined />
-            </span>
-            <span className="label">Vendas Serviço</span>
-          </NavLink>
-        </Menu.Item>
+      
       </Menu>
       <div className="aside-footer">
         <div
@@ -138,9 +87,9 @@ function Sidenav({ color }) {
             {dashboard}
           </span>
           <h6>Desenvolvido por:</h6>
-          <p>Ricardo Leme</p>
+          <p>Prof. Ricardo Leme</p>
           <Button type="primary" className="ant-btn-sm ant-btn-block">
-            <a href="https://api.whatsapp.com/send?phone=5511982674134&text=Olá!" target="_blank" rel="noreferrer"><WhatsAppOutlined />Entre em Contato</a>
+            <a href="https://api.whatsapp.com/send?phone=551140131872&text=Olá!" target="_blank" rel="noreferrer"><WhatsAppOutlined />Entre em Contato</a>
           </Button>
         </div>
       </div>

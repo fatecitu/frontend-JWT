@@ -1,15 +1,3 @@
-/*!
-  =========================================================
-  * Muse Ant Design Dashboard - v1.0.0
-  =========================================================
-  * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-  * Copyright 2021 Creative Tim (https://www.creative-tim.com)
-  * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-  * Coded by Creative Tim
-  =========================================================
-  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useEffect } from "react"
 
 import {
@@ -28,7 +16,7 @@ import {
   ClockCircleOutlined
 } from "@ant-design/icons"
 
-import { NavLink, Link } from "react-router-dom"
+import { NavLink, useHistory } from "react-router-dom"
 
 const data = [
   {
@@ -103,6 +91,14 @@ function Header({
 
  useEffect(() => window.scrollTo(0, 0));
 
+ const history = useHistory();
+
+ const logout =  () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('usuario')
+  history.push('/login')
+
+ }
 
   return (
     <>
@@ -144,11 +140,17 @@ function Header({
           >
             {toggler}
           </Button>
-   
-          <Link to="/login" className="btn-sign-in">
-            {profile}
+
+          <Button
+            
+            className="btn-sign-in"
+            onClick={() => logout()}
+          >
+          {profile}
             <span>Logout</span>
-          </Link>
+          </Button>
+   
+      
          
         </Col>
       </Row>
